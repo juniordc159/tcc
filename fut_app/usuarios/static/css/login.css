@@ -1,0 +1,51 @@
+/* login.css */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #1d6431, #4CAF50);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Evita scroll desnecessário */
+}
+
+.login-container {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #FFD700;
+}
+
+.login-form-container {
+    margin-top: 20px;
+}
+
+.footer {
+    margin-top: 15px;
+}
+
+p{
+    color: #4CAF50;
+}
+
+
+label {
+    font-size: 14px;
+    color: #4CAF50; /* Cor do label */
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}

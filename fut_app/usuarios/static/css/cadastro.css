@@ -1,0 +1,97 @@
+/* Estilos Gerais */
+body {
+    background-color: linear-gradient(135deg, #1d6431, #4CAF50); /* Cor suave para o fundo */
+    font-family: 'Roboto', sans-serif; /* Tipografia moderna */
+    color: #333; /* Texto escuro para boa legibilidade */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 14px;
+    color: #4CAF50;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    background-color: #F9F9F9;
+    font-size: 16px;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #4CAF50; /* Cor azul para o foco */
+    background-color: #ffffff;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #1d6431, #4CAF50); /* Gradiente linear */
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 20px;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #2c8e3c, #5cbf70); /* Gradiente um pouco mais claro para o hover */
+}
+
+button:active {
+    background: linear-gradient(135deg, #1a5e2c, #4b9f4d); /* Gradiente mais escuro para o active */
+}
+
+.mt-3 {
+    margin-top: 25px;
+}
+
+a {
+    color:  #4b9f4d;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 600;
+    display: block;
+    text-align: center;
+}
+
+a:hover {
+    text-decoration: underline;
+    color:  #125313;
+
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
