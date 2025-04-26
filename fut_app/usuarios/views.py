@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
 def login_view(request):
@@ -47,7 +45,6 @@ def cadastro_view(request):
         user = User.objects.create_user(username=email, email=email, password=senha)
         login(request, user)
 
-        # Redirecionar para a página principal após o cadastro
         return redirect('pagina_principal')
 
     return render(request, 'usuarios/cadastro.html')
