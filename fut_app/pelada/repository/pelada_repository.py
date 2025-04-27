@@ -10,10 +10,12 @@ class PeladaRepository(PeladaInterface):
     def get_pelada_by_id(request, pelada_id: int) -> Pelada:
         return Pelada.objects.get(id=pelada_id)
 
-    def create_or_update_pelada(request, pelada: Pelada) -> Pelada:
+    def create_or_update_pelada(request, pelada: Pelada) -> bool:
         try:
             pelada.save()
             return True
+        except Pelada.DoesNotExist:
+            raise Exception("Pelada não encontrada.")
         except Exception as e:
             raise Exception(f"Erro ao criar pelada: {e}")
 

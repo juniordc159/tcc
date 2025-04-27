@@ -1,26 +1,30 @@
-from .models import Pelada, ParticipantePelada
-from django.contrib.auth.models import User
+from typing import List
+from fut_app.pelada.interface.pelada_interface import PeladaInterface
+from fut_app.pelada.models import Pelada
 
-def criar_pelada(criador, dia, hora, local):
-    pelada = Pelada.objects.create(
-        criador=criador,
-        dia=dia,
-        hora=hora,
-        local=local
-    )
-    return pelada
 
-def adicionar_jogador(pelada, usuario):
-    participante, created = ParticipantePelada.objects.get_or_create(
-        pelada=pelada,
-        usuario=usuario
-    )
-    return participante
 
-def atribuir_notas(participante, ataque, velocidade, defesa, passe):
-    participante.ataque = ataque
-    participante.velocidade = velocidade
-    participante.defesa = defesa
-    participante.passe = passe
-    participante.save()
-    return participante
+class PeladaService():
+    def __init__(self, pelada_repository: PeladaInterface):
+        self.pelada_repository = pelada_repository
+        
+def criar_ou_editar_pelada(self, pelada: Pelada) -> bool:
+    response = self.pelada_repository.create_or_update_pelada(pelada)
+    return response
+
+def excluir_pelada(self, pelada_id: int) -> bool:
+    response = self.pelada_repository.delete_pelada(pelada_id)
+    return response
+
+def listar_peladas(self, pelada_id: int) -> List[Pelada]:
+    response = self.pelada_repository.get_all_peladas(pelada_id)
+    return response
+
+def obter_por_id(self, pelada: int) -> Pelada:
+    response = self.pelada_repository.get_by_id(pelada)
+    if not response:
+        raise Exception("Pelada não encontrado.")
+    return response
+
+
+
