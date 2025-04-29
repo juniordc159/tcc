@@ -4,6 +4,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 
+@login_required
+def pagina_principal(request):
+    return render(request, 'usuarios/pagina_principal.html')
+
+@login_required
+def renderizar_pagina_gerenciador(request):
+    return render(request, 'gerencia/gerenciador.html')
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')  
@@ -24,9 +32,6 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-@login_required
-def pagina_principal(request):
-    return render(request, 'usuarios/pagina_principal.html')
 
 def cadastro_view(request):
     if request.method == 'POST':
