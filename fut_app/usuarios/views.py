@@ -10,7 +10,7 @@ def pagina_principal(request):
 
 @login_required
 def renderizar_pagina_gerenciador(request):
-    return render(request, 'gerencia/gerenciador.html')
+    return render(request, 'pelada/gerenciador.html')
 
 def login_view(request):
     if request.method == 'POST':
