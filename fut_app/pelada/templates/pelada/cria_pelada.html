@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  body {
+    background: #121212;
+    color: #eee;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .container {
+    max-width: 480px;
+    background: #1f1f1f;
+    padding: 2.5rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 204, 102, 0.3);
+    margin: 4rem auto;
+  }
+
+  h2 {
+    color: #00cc66;
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 1.8rem;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+    color: #9de0b3;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="time"] {
+    background: #121212;
+    border: 2px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    color: #eee;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  input[type="text"]:focus,
+  input[type="date"]:focus,
+  input[type="time"]:focus {
+    border-color: #00cc66;
+    outline: none;
+    box-shadow: 0 0 8px #00cc66aa;
+  }
+
+  button[type="submit"] {
+    background: #00cc66;
+    color: #121212;
+    font-weight: 700;
+    font-size: 1.15rem;
+    padding: 0.85rem 1.5rem;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    align-self: center;
+    width: 60%;
+    box-shadow: 0 6px 12px rgba(0, 204, 102, 0.5);
+  }
+
+  button[type="submit"]:hover {
+    background: #00b85c;
+    box-shadow: 0 8px 16px rgba(0, 184, 92, 0.7);
+  }
+
+  .alert-danger {
+    background: #e04e39;
+    color: #fff;
+    padding: 1rem 1.2rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 10px rgba(224, 78, 57, 0.6);
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .mt-3 a {
+    display: inline-block;
+    margin-top: 1.5rem;
+    color: #00cc66;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .mt-3 a:hover {
+    color: #00b85c;
+    text-decoration: underline;
+  }
+</style>
+
+<div class="container" role="main" aria-labelledby="title-criar-pelada">
+  <h2 id="title-criar-pelada">Criar Nova Pelada</h2>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert-danger" role="alert">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    
+    <label for="nome">Nome</label>
+    <input type="text" id="nome" name="nome" required autocomplete="off" placeholder="Ex: Quadra Central">
+
+    <label for="descricao">Descrição</label>
+    <input type="text" id="desc" name="desc" required>
+
+
+
+    <button type="submit" aria-label="Criar nova pelada">Criar Pelada</button>
+  </form>
+
+  <div class="mt-3">
+    <a href="{% url 'gerenciador' %}">← Voltar para o gerenciador</a>
+  </div>
+</div>
+{% endblock %}

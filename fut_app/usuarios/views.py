@@ -8,9 +8,6 @@ from django.contrib import messages
 def pagina_principal(request):
     return render(request, 'usuarios/pagina_principal.html')
 
-@login_required
-def renderizar_pagina_gerenciador(request):
-    return render(request, 'pelada/gerenciador.html')
 
 def login_view(request):
     if request.method == 'POST':

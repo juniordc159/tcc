@@ -1,15 +1,200 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h1 class="text-center mb-4">Bem-vindo ao Gerenciador de Peladas!</h1>
-            <div class="text-center">
-                <p>Peladinhas</p>
-                <a href="" class="btn btn-success btn-lg">Gerenciar Peladas</a>
-            </div>
-        </div>
+<style>
+    body {
+        background: #121212;
+        color: #eee;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .peladas-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .header-section {
+        margin-bottom: 30px;
+    }
+
+    .header-title {
+        color: #00cc66;
+        font-size: 2rem;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .header-subtitle {
+        color: #aaa;
+        margin-top: 5px;
+    }
+
+    /* Estilo de planilha */
+    .sheet-container {
+        background: #1e1e1e;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .sheet-header {
+        display: grid;
+        grid-template-columns: 2fr 3fr 1.5fr 1.5fr;
+        background: #00cc66;
+        color: #121212;
+        font-weight: bold;
+        padding: 12px 15px;
+    }
+
+    .sheet-row {
+        display: grid;
+        grid-template-columns: 2fr 3fr 1.5fr 1.5fr;
+        padding: 12px 15px;
+        border-bottom: 1px solid #333;
+        align-items: center;
+    }
+
+    .sheet-row:nth-child(even) {
+        background: #252525;
+    }
+
+    .sheet-row:hover {
+        background: #333;
+    }
+
+    .sheet-cell {
+        padding: 8px 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sheet-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .sheet-btn {
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .edit-btn {
+        background: #f7b500;
+        color: #121212;
+    }
+
+    .delete-btn {
+        background: #e04e39;
+        color: white;
+    }
+
+    /* Mensagem quando não há peladas */
+    .empty-message {
+        text-align: center;
+        padding: 40px 20px;
+        color: #aaa;
+    }
+
+    /* Botão flutuante */
+    .floating-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #00cc66;
+        color: #121212;
+        padding: 12px 24px;
+        border-radius: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 12px rgba(0, 204, 102, 0.3);
+    }
+
+    @media (max-width: 768px) {
+        .sheet-header, .sheet-row {
+            grid-template-columns: 1.5fr 2fr 1fr 1.2fr;
+        }
+        
+        .sheet-btn {
+            padding: 6px 8px;
+            font-size: 0.8rem;
+        }
+        
+        .floating-btn {
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+<div class="peladas-container">
+    <div class="header-section">
+        <h1 class="header-title">
+            <i class="fas fa-futbol"></i>
+            Minhas Peladas
+        </h1>
+        <p class="header-subtitle">Gerencie suas peladas ou participe de novas</p>
     </div>
+
+    <div class="sheet-container">
+        <!-- Cabeçalho da planilha -->
+        <div class="sheet-header">
+            <div class="sheet-cell">Nome</div>
+            <div class="sheet-cell">Descrição</div>
+            <div class="sheet-cell">Criador</div>
+            <div class="sheet-cell">Ações</div>
+        </div>
+
+        <!-- Conteúdo da planilha -->
+        {% if peladas %}
+            {% for pelada in peladas %}
+            <div class="sheet-row">
+                <div class="sheet-cell" title="{{ pelada.nome }}">{{ pelada.nome }}</div>
+                <div class="sheet-cell" title="{{ pelada.descricao|default:'Sem descrição' }}">
+                    {{ pelada.descricao|default:"-"|truncatechars:40 }}
+                </div>
+                <div class="sheet-cell">{{ pelada.criador.username }}</div>
+                <div class="sheet-cell">
+                    <div class="sheet-actions">
+                        <a href="{% url 'editar_pelada' pelada.id %}" class="sheet-btn edit-btn">
+                            <i class="fas fa-eye"></i> 
+                        </a>
+                        <form method="post" action="{% url 'excluir_pelada' pelada.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="sheet-btn delete-btn" 
+                                    onclick="return confirm('Tem certeza que deseja excluir esta pelada?')">
+                                <i class="fas fa-trash"></i> 
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-message">
+                <i class="fas fa-futbol" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                <p>Você ainda não participa ou criou nenhuma pelada.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'cadastra_pelada' %}" class="floating-btn">
+        <i class="fas fa-plus"></i> Nova Pelada
+    </a>
 </div>
 {% endblock %}

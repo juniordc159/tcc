@@ -1,11 +1,11 @@
 from typing import List
 from pelada.interface.pelada_interface import PeladaInterface
-from pelada.models.pelada import Pelada
+from pelada.models import Pelada
 
 class PeladaRepository(PeladaInterface):
 
-    def get_all_peladas(request) -> List[Pelada]:
-        return Pelada.objects.all()
+    def get_all_peladas(request, user_id) -> List[Pelada]:
+        return list(Pelada.objects.filter(criador_id=user_id))
 
     def get_pelada_by_id(request, pelada_id: int) -> Pelada:
         return Pelada.objects.get(id=pelada_id)

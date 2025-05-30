@@ -1,6 +1,6 @@
 from typing import List
-from fut_app.pelada.interface.participante_pelada_interface import ParticipantePeladaInterface
-from fut_app.pelada.models import ParticipantePelada
+from pelada.interface.participante_pelada_interface import ParticipantePeladaInterface
+from pelada.models import ParticipantePelada
 
 
 

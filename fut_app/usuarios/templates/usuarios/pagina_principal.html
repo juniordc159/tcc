@@ -1,15 +1,62 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h1 class="text-center mb-4">Bem-vindo ao Gerenciador de Peladas!</h1>
-            <div class="text-center">
-                <p>Crie e gerencie suas peladas de futebol, organize os jogadores e faça sorteios de times!</p>
-                <a href="{% url 'gerenciador' %}" class="btn btn-success btn-lg">Gerenciar Peladas</a>
-            </div>
-        </div>
-    </div>
+<style>
+  body {
+    background: #121212;
+    color: #eee;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 6rem auto;
+    padding: 1rem 2rem;
+    background: #1e1e1e;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 204, 102, 0.3);
+    text-align: center;
+  }
+
+  h1 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #00cc66;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: #bbb;
+  }
+
+  a.btn-success {
+    background: #00cc66;
+    color: #121212;
+    padding: 0.8rem 1.8rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-radius: 9999px;
+    box-shadow: 0 8px 15px rgba(0, 204, 102, 0.6);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  a.btn-success:hover {
+    background: #00b85c;
+    box-shadow: 0 10px 20px rgba(0, 184, 92, 0.8);
+    transform: translateY(-3px);
+  }
+</style>
+
+<div class="container" role="main">
+  <h1>Bem-vindo ao Gerenciador de Peladas!</h1>
+  <p>Crie e gerencie suas peladas de futebol, organize os jogadores e faça sorteios de times!</p>
+  <a href="{% url 'gerenciador' %}" class="btn-success" aria-label="Acessar o gerenciador de peladas">Acessar Gerenciador</a>
 </div>
 {% endblock %}

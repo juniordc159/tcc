@@ -10,7 +10,7 @@ class ParticipantePeladaInterface(ABC):
         raise NotImplementedError("Este método deve ser substituído.")
 
     @abstractmethod
-    def get_participantes_by_pelada_id(request):
+    def get_participantes_by_pelada_id(request, pelada_id):
         raise NotImplementedError("Este método deve ser substituído.")
 
     @abstractmethod

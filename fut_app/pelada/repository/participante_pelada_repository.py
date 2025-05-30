@@ -1,6 +1,6 @@
 from typing import List
 from pelada.interface.participante_pelada_interface import ParticipantePeladaInterface
-from pelada.models.pelada import ParticipantePelada
+from pelada.models import ParticipantePelada
 
 class ParticipantePeladaRepository(ParticipantePeladaInterface):
 
@@ -31,9 +31,9 @@ class ParticipantePeladaRepository(ParticipantePeladaInterface):
         except Exception as e:
             raise Exception(f"Erro ao obter participante: {e}")
 
-    def get_participantes_by_pelada_id(request):
+    def get_participantes_by_pelada_id(request, pelada_id: int) -> List[ParticipantePelada]:
         try:
-            return ParticipantePelada.objects.all()
+            return ParticipantePelada.objects.filter(pelada_id=pelada_id)
         except ParticipantePelada.DoesNotExist:
             raise Exception("Participantes não encontrados.")
         except Exception as e:
