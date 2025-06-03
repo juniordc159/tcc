@@ -11,14 +11,10 @@ class Pelada(models.Model):
 class ParticipantePelada(models.Model):
     pelada = models.ForeignKey(Pelada, on_delete=models.CASCADE, related_name='participantes')
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    nome = models.CharField(max_length=100)
     ataque = models.IntegerField(default=0)
     velocidade = models.IntegerField(default=0)
     defesa = models.IntegerField(default=0)
     passe = models.IntegerField(default=0)
     controle = models.IntegerField(default=0)
-    media = models.FloatField(default=0)
-
-    class Meta:
-        unique_together = ('pelada', 'usuario')
-
 

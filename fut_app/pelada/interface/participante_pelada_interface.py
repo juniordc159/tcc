@@ -14,10 +14,10 @@ class ParticipantePeladaInterface(ABC):
         raise NotImplementedError("Este método deve ser substituído.")
 
     @abstractmethod
-    def get_participante_by_id(request, pelada_id: int):
+    def get_participante_by_id(request, participante_id: int):
         raise NotImplementedError("Este método deve ser substituído.")
 
     @abstractmethod
-    def delete_participante(self, pelada_id):
+    def delete_participante(self, participante_id):
         raise NotImplementedError("Este método deve ser substituído.")
     
