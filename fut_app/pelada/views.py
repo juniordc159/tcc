@@ -1,13 +1,26 @@
+import json
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-import json
 from urllib.parse import parse_qs
+from dataclasses import dataclass
+
 from pelada.models import ParticipantePelada, Pelada
 from pelada.repository.pelada_repository import PeladaRepository
 from pelada.service.pelada_service import PeladaService
 from pelada.repository.participante_pelada_repository import ParticipantePeladaRepository
 from pelada.service.participante_pelada_service import ParticipantePeladaService
+
+@dataclass
+class ParticipantePeladaDTO:
+    pelada: Pelada
+    usuario: str
+    nome: str
+    ataque: int
+    velocidade: int
+    defesa: int
+    passe: int
+    controle: int
 
 def pelada_factory():
     pelada_repo = PeladaRepository()
@@ -53,13 +66,17 @@ def editar_pelada(request, pelada_id):
     pelada = get_object_or_404(Pelada, id=pelada_id, criador=request.user)
     players_usercase = participante_factory()
     players = players_usercase.participante_pelada_repository.get_participantes_by_pelada_id(pelada_id)
-    return render(request, 'pelada/editar_pelada.html', {'pelada': pelada, 'players': players})
+    players_dict = [player.to_dict() for player in players]
+
+    return render(request, 'pelada/editar_pelada.html', {'pelada': pelada, 'players': players_dict})
 
 @login_required
 def salva_pelada(request, pelada_id):
     pelada_usecase = pelada_factory()
     pelada = pelada_usecase.pelada_repository.get_pelada_by_id(pelada_id)
     participante_pelada_usecase = participante_factory()
+    all_players_response = participante_pelada_usecase.participante_pelada_repository.get_participantes_by_pelada_id(pelada_id)
+    all_players_dict_response = [player.to_dict() for player in all_players_response]
     if request.method == 'POST':
         decoded = request.body.decode('utf-8')
         parsed = parse_qs(decoded)
@@ -72,6 +89,7 @@ def salva_pelada(request, pelada_id):
             players.append(player)
         for player in players:
             player_dto = ParticipantePelada(
+                id=player['player_id'],
                 pelada=pelada,
                 usuario=request.user,
                 nome=player['player_name'],
@@ -81,7 +99,12 @@ def salva_pelada(request, pelada_id):
                 passe=player['player_pass'],
                 controle=player['player_control'],
             )
-            response = participante_pelada_usecase.participante_pelada_repository.create_or_update_participante(player_dto)
+            if 'new' in player_dto.id:
+                response = participante_pelada_usecase.participante_pelada_repository.create_or_update_participante(player_dto)
+            else:
+                all_players_dict_response = [player for player in all_players_dict_response if player['id'] != player_dto.id]
+        a=1
+
         return redirect('gerenciador')
 
     return render(request, 'pelada/editar_pelada.html', {'pelada': pelada_id})

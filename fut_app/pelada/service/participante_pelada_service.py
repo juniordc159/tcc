@@ -25,5 +25,5 @@ def listar_participantes_pelada(self, pelada_id: int) -> List[ParticipantePelada
 def obter_participante_por_id(self, participante: int) -> ParticipantePelada:
     response = self.participante_pelada_repository.get_participante_by_id(participante)
     if not response:
-        raise Exception("Participante não encontrado.")
+        return None
     return response

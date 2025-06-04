@@ -6,6 +6,7 @@ class ParticipantePeladaRepository(ParticipantePeladaInterface):
 
     def create_or_update_participante(request, participante: ParticipantePelada) -> bool:
         try:
+            participante.id = None
             participante.save()
             return True
         except ParticipantePelada.DoesNotExist:

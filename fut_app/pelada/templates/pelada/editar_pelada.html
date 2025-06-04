@@ -571,11 +571,10 @@
                                 {{ player.media|default:"0.0" }}
                             </span>
                         </td>
-                        <td class="player_id">
-                            <input type="hidden" name="player_id" value="{{ player.id|default:forloop.counter }}">
                         <td>
                             <div class="action-buttons">
-                                <button type="button" class="btn-icon btn-delete" onclick="removePlayer({{ player.id|default:forloop.counter }})" title="Remover jogador">
+                                <input type="hidden" name="player_id" value="{{ player.id }}">
+                                <button type="button" class="btn-icon btn-delete" onclick="removePlayer('{{ player.id }}')" title="Remover jogador">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
@@ -683,11 +682,11 @@
                 noPlayersMsg.closest('tr').remove();
             }
             
-            const newId = Date.now();
+            const newId = 'new_' + Date.now();
             
             const newRow = document.createElement('tr');
             newRow.className = 'player-row';
-            newRow.dataset.playerId = 'new_' + newId;
+            newRow.dataset.playerId = newId;
             newRow.innerHTML = `
                 <td class="player-name">
                     <input type="text" name="player_name" value="${name.trim()}" class="player-name-input" required>
@@ -718,11 +717,9 @@
                 <td class="player-avg">
                     <span class="avg-badge avg-medium">5.0</span>
                 </td>
-                <td class="player_id">
-                    <input type="hidden" name="player_id" value="{{ player.id|default:forloop.counter }}">
-                <td>
                 <td>
                     <div class="action-buttons">
+                        <input type="hidden" name="player_id" value="${newId}">
                         <button type="button" class="btn-icon btn-delete" onclick="removePlayer('${newId}')" title="Remover jogador">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -756,11 +753,11 @@
             
             nameList.forEach(name => {
                 if (name) {
-                    const newId = Date.now() + Math.floor(Math.random() * 1000);
+                    const newId = 'new_' + (Date.now() + Math.floor(Math.random() * 1000));
                     
                     const newRow = document.createElement('tr');
                     newRow.className = 'player-row';
-                    newRow.dataset.playerId = 'new_' + newId;
+                    newRow.dataset.playerId = newId;
                     newRow.innerHTML = `
                         <td class="player-name">
                             <input type="text" name="player_name" value="${name}" class="player-name-input" required>
@@ -791,11 +788,9 @@
                         <td class="player-avg">
                             <span class="avg-badge avg-medium">5.0</span>
                         </td>
-                        <td class="player_id">
-                            <input type="hidden" name="player_id" value="{{ player.id|default:forloop.counter }}">
-                        <td>
                         <td>
                             <div class="action-buttons">
+                                <input type="hidden" name="player_id" value="${newId}">
                                 <button type="button" class="btn-icon btn-delete" onclick="removePlayer('${newId}')" title="Remover jogador">
                                     <i class="fas fa-trash"></i>
                                 </button>
@@ -814,25 +809,35 @@
 
     // Remover jogador
     function removePlayer(playerId) {
-        if (confirm('Tem certeza que deseja remover este jogador?')) {
-            const row = document.querySelector(`tr[data-player-id="${playerId}"]`);
-            if (row) {
-                row.remove();
-                updateStats();
-                
-                // Se não houver mais jogadores, mostra a mensagem
-                const tbody = document.getElementById('players-tbody');
-                if (tbody.children.length === 0) {
-                    tbody.innerHTML = `
-                        <tr>
-                            <td colspan="9" class="text-center">
-                                <div class="no-players-message">
-                                    Nenhum jogador cadastrado ainda
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                }
+        // Encontra a linha do jogador de duas formas diferentes:
+        // 1. Procurando pelo atributo data-player-id
+        // 2. Procurando pelo input hidden com o player_id
+        let row = document.querySelector(`tr[data-player-id="${playerId}"]`);
+        
+        if (!row) {
+            // Se não encontrou pelo data-attribute, tenta pelo input hidden
+            const input = document.querySelector(`input[name="player_id"][value="${playerId}"]`);
+            if (input) {
+                row = input.closest('tr');
+            }
+        }
+        
+        if (row && confirm('Tem certeza que deseja remover este jogador?')) {
+            row.remove();
+            updateStats();
+            
+            // Se não houver mais jogadores, mostra a mensagem
+            const tbody = document.getElementById('players-tbody');
+            if (tbody.children.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="text-center">
+                            <div class="no-players-message">
+                                Nenhum jogador cadastrado ainda
+                            </div>
+                        </td>
+                    </tr>
+                `;
             }
         }
     }

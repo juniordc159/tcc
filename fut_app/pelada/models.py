@@ -18,3 +18,16 @@ class ParticipantePelada(models.Model):
     passe = models.IntegerField(default=0)
     controle = models.IntegerField(default=0)
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'pelada': self.pelada.id,
+            'usuario': self.usuario.username,
+            'nome': self.nome,
+            'ataque': self.ataque,
+            'velocidade': self.velocidade,
+            'defesa': self.defesa,
+            'passe': self.passe,
+            'controle': self.controle
+        }
+
