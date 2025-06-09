@@ -1,0 +1,344 @@
+/* Estilos Gerais */
+body {
+    background: #121212;
+    color: #eee;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.page-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: 100vh;
+}
+
+/* Header */
+.header-section {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    border-bottom: 2px solid #00cc66;
+}
+
+.header-title {
+    color: #00cc66;
+    font-size: 1.8rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.header-subtitle {
+    color: #aaa;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+}
+
+/* Estatísticas */
+.stats-section {
+    background: #1e1e1e;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.stat-card {
+    background: #2a2a2a;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #404040;
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #00cc66;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #ccc;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Times */
+.teams-section {
+    flex: 1;
+    background: #1e1e1e;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow: auto;
+}
+
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    height: 100%;
+}
+
+.team-card {
+    background: #2a2a2a;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #404040;
+}
+
+.team-header {
+    background: linear-gradient(135deg, #2a2a2a 0%, #333 100%);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #404040;
+}
+
+.team-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #00cc66;
+}
+
+.team-average {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+}
+
+.team-players {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.player-card {
+    background: #333;
+    border-radius: 6px;
+    padding: 1rem;
+    border: 1px solid #404040;
+}
+
+.player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.player-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.player-average {
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+}
+
+.player-stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+}
+
+.stat {
+    background: #404040;
+    padding: 0.5rem;
+    border-radius: 4px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.stat i {
+    color: #00cc66;
+    font-size: 0.9rem;
+}
+
+.stat span {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Badges de Média */
+.avg-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    min-width: 50px;
+    text-align: center;
+}
+
+.avg-high { background: #00cc66; color: #121212; }
+.avg-medium { background: #f7b500; color: #121212; }
+.avg-low { background: #e04e39; color: #fff; }
+
+/* Footer */
+.footer-section {
+    background: #1e1e1e;
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.action-btn {
+    background: #2a2a2a;
+    border: 1px solid #404040;
+    color: #fff;
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    background: #333;
+    border-color: #00cc66;
+    transform: translateY(-1px);
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .teams-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .page-container {
+        padding: 0.5rem;
+    }
+
+    .header-title {
+        font-size: 1.5rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    .teams-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .player-stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .footer-section {
+        flex-direction: column;
+    }
+
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Estilos para Impressão */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    .page-container {
+        padding: 0;
+        gap: 0.5rem;
+    }
+
+    .header-section,
+    .stats-section,
+    .teams-section,
+    .team-card,
+    .player-card {
+        background: white;
+        border: 1px solid #ddd;
+    }
+
+    .header-title {
+        color: black;
+    }
+
+    .header-subtitle {
+        color: #666;
+    }
+
+    .stat-card {
+        border: 1px solid #ddd;
+    }
+
+    .stat-number {
+        color: black;
+    }
+
+    .stat-label {
+        color: #666;
+    }
+
+    .team-header h2 {
+        color: black;
+    }
+
+    .player-header h3 {
+        color: black;
+    }
+
+    .stat {
+        background: #f5f5f5;
+    }
+
+    .stat i {
+        color: black;
+    }
+
+    .footer-section {
+        display: none;
+    }
+
+    .avg-badge {
+        border: 1px solid #ddd;
+    }
+
+    .avg-high { background: #e6ffe6; color: black; }
+    .avg-medium { background: #fff9e6; color: black; }
+    .avg-low { background: #ffe6e6; color: black; }
+} 

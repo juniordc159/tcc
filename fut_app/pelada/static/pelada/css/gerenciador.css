@@ -1,0 +1,9 @@
+.sheet-btn.sort-btn {
+    background: #2d2d2d;
+    color: #00cc66;
+}
+
+.sheet-btn.sort-btn:hover {
+    background: #00cc66;
+    color: #fff;
+} 

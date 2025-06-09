@@ -1,0 +1,347 @@
+body {
+    background: #121212;
+    color: #eee;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Layout Principal */
+.page-container {
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "stats stats"
+        "actions table"
+        "footer footer";
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    min-height: 100vh;
+    gap: 0.5rem;
+    padding: 0.5rem;
+}
+
+/* Header */
+.header-section {
+    grid-area: header;
+    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border-bottom: 2px solid #00cc66;
+}
+
+.header-title {
+    color: #00cc66;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.header-subtitle {
+    color: #ccc;
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+}
+
+/* Estatísticas */
+.stats-section {
+    grid-area: stats;
+    background: #1e1e1e;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
+}
+
+.stat-card {
+    background: #2a2a2a;
+    padding: 0.5rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #404040;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #00cc66;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    color: #ccc;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Botões de Ação */
+.actions-section {
+    grid-area: actions;
+    background: #1e1e1e;
+    padding: 0.5rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    background: #2a2a2a;
+    border: 1px solid #404040;
+    color: #fff;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 0.85rem;
+    height: 30px;
+}
+
+.action-btn:hover {
+    background: #333;
+    border-color: #00cc66;
+    transform: translateY(-1px);
+}
+
+.action-btn.primary {
+    background: #00cc66;
+    color: #121212;
+    font-weight: 600;
+    min-width: 110px;
+    margin-top: -0.25rem;
+}
+
+.action-btn.primary:hover {
+    background: #00b85c;
+}
+
+/* Tabela de Jogadores */
+.table-section {
+    grid-area: table;
+    background: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 240px);
+}
+
+.players-table-wrapper {
+    flex: 1;
+    overflow: auto;
+    padding: 0.5rem;
+    max-height: calc(100vh - 290px);
+}
+
+.players-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table-header {
+    background: linear-gradient(135deg, #00cc66 0%, #00b85c 100%);
+    color: #121212;
+    font-weight: 700;
+    text-align: left;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.table-header th {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.player-row {
+    background: #2a2a2a;
+    border-bottom: 1px solid #404040;
+}
+
+.player-row:hover {
+    background: rgba(0, 204, 102, 0.1);
+}
+
+.player-row td {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    border-right: 1px solid #404040;
+}
+
+.player-row td:last-child {
+    border-right: none;
+}
+
+.player-name-input {
+    background: #2a2a2a;
+    border: 1px solid #404040;
+    color: #fff;
+    padding: 0.3rem;
+    border-radius: 4px;
+    width: 100%;
+    min-width: 120px;
+    transition: all 0.3s ease;
+}
+
+.player-name-input:focus {
+    background: #333;
+    border-color: #00cc66;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 204, 102, 0.2);
+}
+
+.player-name-input::selection {
+    background: #00cc66;
+    color: #fff;
+}
+
+.skill-input {
+    width: 50px;
+    background: #404040;
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #fff;
+    text-align: center;
+    padding: 0.3rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.skill-input:focus {
+    background: #333;
+    border-color: #00cc66;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 204, 102, 0.2);
+}
+
+.skill-input::selection {
+    background: #00cc66;
+    color: #fff;
+}
+
+.avg-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    min-width: 50px;
+    text-align: center;
+}
+
+.avg-high { background: #00cc66; color: #121212; }
+.avg-medium { background: #f7b500; color: #121212; }
+.avg-low { background: #e04e39; color: #fff; }
+
+/* Footer com Botões de Ação */
+.footer-section {
+    grid-area: footer;
+    background: #1e1e1e;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 40px;
+    margin-top: -0.5rem;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .page-container {
+        grid-template-areas:
+            "header header"
+            "stats stats"
+            "actions actions"
+            "table table"
+            "footer footer";
+        grid-template-columns: 1fr;
+    }
+
+    .actions-section {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .action-btn {
+        flex: 1;
+        min-width: 150px;
+    }
+
+    .players-table-wrapper {
+        max-height: calc(100vh - 400px);
+    }
+}
+
+@media (max-width: 768px) {
+    .page-container {
+        padding: 0.25rem;
+        gap: 0.25rem;
+    }
+
+    .header-title {
+        font-size: 1.3rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .stat-number {
+        font-size: 1.3rem;
+    }
+
+    .action-btn {
+        min-width: 120px;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    .player-row td {
+        padding: 0.3rem;
+        font-size: 0.8rem;
+    }
+
+    .player-name-input {
+        min-width: 100px;
+    }
+
+    .skill-input {
+        width: 45px;
+        padding: 0.3rem;
+    }
+}
+
+/* Scrollbar */
+.players-table-wrapper::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.players-table-wrapper::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+.players-table-wrapper::-webkit-scrollbar-thumb {
+    background: #00cc66;
+    border-radius: 4px;
+}
+
+.players-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #00b85c;
+} 

@@ -12,11 +12,12 @@ class ParticipantePelada(models.Model):
     pelada = models.ForeignKey(Pelada, on_delete=models.CASCADE, related_name='participantes')
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     nome = models.CharField(max_length=100)
-    ataque = models.IntegerField(default=0)
-    velocidade = models.IntegerField(default=0)
-    defesa = models.IntegerField(default=0)
-    passe = models.IntegerField(default=0)
-    controle = models.IntegerField(default=0)
+    ataque = models.IntegerField(default=5)
+    defesa = models.IntegerField(default=5)
+    velocidade = models.IntegerField(default=5)
+    controle = models.IntegerField(default=5)
+    passe = models.IntegerField(default=5)
+    selected = models.BooleanField(default=False)
 
     def to_dict(self):
         return {
@@ -25,9 +26,11 @@ class ParticipantePelada(models.Model):
             'usuario': self.usuario.username,
             'nome': self.nome,
             'ataque': self.ataque,
-            'velocidade': self.velocidade,
             'defesa': self.defesa,
+            'velocidade': self.velocidade,
+            'controle': self.controle,
             'passe': self.passe,
-            'controle': self.controle
+            'selected': self.selected,
+            'media': (self.ataque + self.defesa + self.velocidade + self.controle + self.passe) / 5
         }
 

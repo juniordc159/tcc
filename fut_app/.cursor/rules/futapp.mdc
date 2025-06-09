@@ -1,0 +1,94 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Regras para o Projeto FutApp
+
+## 1. Arquitetura Hexagonal
+- Manter a separação clara entre domínio, aplicação e infraestrutura
+- Implementar portas (interfaces) para cada interação externa
+- Garantir que o domínio não dependa de frameworks ou bibliotecas externas
+- Usar injeção de dependência para acoplamento fraco
+
+## 2. Clean Code
+- Nomes descritivos em português para classes e métodos
+- Funções pequenas e com responsabilidade única
+- Evitar duplicação de código (DRY)
+- Documentação clara e objetiva
+- Tratamento adequado de erros
+
+## 3. Princípios SOLID
+- Single Responsibility: Cada classe deve ter uma única responsabilidade
+- Open/Closed: Extensível para novas funcionalidades sem modificar código existente
+- Liskov Substitution: Subtipos devem ser substituíveis por seus tipos base
+- Interface Segregation: Interfaces específicas para cada cliente
+- Dependency Inversion: Depender de abstrações, não implementações
+
+## 4. Regras Específicas do Projeto
+- Implementar validações de regras de negócio no domínio
+- Separar lógica de cálculo de médias em serviços específicos
+- Criar DTOs para transferência de dados entre camadas
+- Implementar testes unitários para regras de negócio
+- Usar padrão Repository para acesso a dados
+
+## 5. Organização de Código
+```
+pelada/
+├── domain/
+│   ├── entities/
+│   ├── value_objects/
+│   └── exceptions/
+├── application/
+│   ├── services/
+│   ├── dtos/
+│   └── use_cases/
+├── infrastructure/
+│   ├── repositories/
+│   ├── adapters/
+│   └── config/
+└── interfaces/
+    ├── api/
+    ├── web/
+    └── cli/
+```
+
+## 6. Testes
+- Testes unitários para regras de negócio
+- Testes de integração para fluxos principais
+- Mocks para dependências externas
+- Cobertura mínima de 80% para código crítico
+
+## 7. Segurança
+- Validação de entrada de dados
+- Autenticação e autorização
+- Proteção contra injeção SQL
+- Sanitização de dados
+
+## 8. Performance
+- Otimização de consultas ao banco
+- Cache quando apropriado
+- Paginação de resultados
+- Lazy loading quando necessário
+
+## 9. Versionamento
+- Commits semânticos
+- Branches por feature
+- Pull requests com revisão
+- Documentação de mudanças
+
+## 10. Documentação
+- README atualizado
+- Documentação de API
+- Comentários em código complexo
+- Diagramas de arquitetura
+
+## Responsabilidades do Agent
+1. Sugerir melhorias de código
+2. Identificar violações de princípios SOLID
+3. Propor refatorações
+4. Auxiliar na implementação de testes
+5. Garantir consistência no código
+6. Sugerir padrões de projeto apropriados
+7. Ajudar na documentação
+8. Identificar possíveis problemas de segurança

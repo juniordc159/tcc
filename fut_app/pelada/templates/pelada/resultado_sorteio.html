@@ -1,0 +1,315 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    body {
+        background: #181818;
+        color: #eee;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+    .result-container {
+        width: 100vw;
+        max-width: 100vw;
+        margin: 0;
+        padding: 12px 0 12px 0;
+        background: #232323;
+        border-radius: 0 0 16px 16px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+        min-height: 100vh;
+    }
+    .header-section {
+        text-align: center;
+        margin-bottom: 12px;
+        padding-top: 8px;
+    }
+    .header-title {
+        color: #00cc66;
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    .header-subtitle {
+        color: #ccc;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+    .stats-section {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        width: 100vw;
+    }
+    .stat-card {
+        background: #222;
+        border-radius: 10px;
+        padding: 1rem 2rem;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        min-width: 180px;
+        margin-bottom: 1rem;
+    }
+    .stat-number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #00cc66;
+    }
+    .stat-label {
+        color: #aaa;
+        font-size: 0.9rem;
+        margin-top: 0.2rem;
+    }
+    .teams-grid {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        width: 100vw;
+        padding: 0 2vw;
+        box-sizing: border-box;
+    }
+    .team-card {
+        background: #232323;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+        padding: 1.2rem 0.5rem 1.5rem 0.5rem;
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+        flex: 1 1 0;
+        margin-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 420px;
+        max-height: 520px;
+        overflow: hidden;
+    }
+    .team-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #00cc66;
+        margin-bottom: 0.2rem;
+        text-align: center;
+        letter-spacing: 1px;
+    }
+    .team-average {
+        font-size: 1.1rem;
+        color: #f7b500;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        text-align: center;
+    }
+    .player-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        overflow-y: auto;
+        max-height: 340px;
+        padding-right: 4px;
+    }
+    .player-card {
+        background: #292929;
+        border-radius: 8px;
+        padding: 0.3rem 0.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+        min-width: 0;
+        height: 38px;
+        font-size: 1rem;
+    }
+    .player-name {
+        font-weight: 600;
+        color: #fff;
+        font-size: 1rem;
+        min-width: 90px;
+        max-width: 180px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .player-stats {
+        display: flex;
+        gap: 0.4rem;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .stat-icon {
+        color: #00cc66;
+        margin-right: 2px;
+    }
+    .stat-value {
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 500;
+        margin-right: 6px;
+    }
+    .avg-badge {
+        display: inline-block;
+        padding: 0.2rem 0.7rem;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 700;
+        min-width: 40px;
+        text-align: center;
+    }
+    .avg-high { background: #00cc66; color: #121212; }
+    .avg-medium { background: #f7b500; color: #121212; }
+    .avg-low { background: #e04e39; color: #fff; }
+    .header-actions {
+        display: flex;
+        gap: 0.5rem;
+        position: absolute;
+        top: 18px;
+        left: 18px;
+        z-index: 10;
+    }
+    .header-action-btn {
+        background: #00cc66;
+        color: #121212;
+        border: none;
+        border-radius: 5px;
+        padding: 0.35rem 0.9rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+    }
+    .header-action-btn:hover {
+        background: #00b85c;
+        color: #fff;
+    }
+    .footer-section { display: none; }
+    .player-list::-webkit-scrollbar {
+        width: 8px;
+    }
+    .player-list::-webkit-scrollbar-thumb {
+        background: #00cc66;
+        border-radius: 4px;
+    }
+    .player-list::-webkit-scrollbar-track {
+        background: #232323;
+    }
+    @media (max-width: 1100px) {
+        .teams-grid {
+            flex-direction: column;
+            align-items: center;
+            width: 100vw;
+        }
+        .result-container {
+            padding: 0;
+        }
+        .team-card {
+            max-width: 98vw;
+            min-width: 0;
+        }
+    }
+    @media (max-width: 700px) {
+        .header-title { font-size: 1.3rem; }
+        .team-card { padding: 0.7rem 0.3rem 1rem 0.3rem; }
+        .stat-card { min-width: 120px; padding: 0.7rem 0.5rem; }
+    }
+</style>
+<div class="result-container" style="position:relative;">
+    <div class="header-actions">
+        <a href="{% url 'editar_pelada' pelada.id %}" class="header-action-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
+        <button class="header-action-btn" onclick="window.print()"><i class="fas fa-print"></i></button>
+    </div>
+    <div class="header-section">
+        <div class="header-title">Resultado do Sorteio</div>
+        <div class="header-subtitle">Veja abaixo a composição dos times e as médias</div>
+    </div>
+    <div class="stats-section">
+        <div class="stat-card">
+            <div class="stat-number">{{ time1|length }}</div>
+            <div class="stat-label">Jogadores Time 1</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ time2|length }}</div>
+            <div class="stat-label">Jogadores Time 2</div>
+        </div>
+        {% if time3 %}
+        <div class="stat-card">
+            <div class="stat-number">{{ time3|length }}</div>
+            <div class="stat-label">Jogadores Time 3</div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="teams-grid">
+        <div class="team-card">
+            <div class="team-title">Time 1</div>
+            <div class="team-average">Média: {{ media_time1 }}</div>
+            <div class="player-list">
+                {% for jogador in time1 %}
+                <div class="player-card">
+                    <span class="player-name">{{ jogador.nome }}</span>
+                    <span class="player-stats">
+                        <span class="stat-icon"><i class="fas fa-swords"></i></span><span class="stat-value">{{ jogador.ataque }}</span>
+                        <span class="stat-icon"><i class="fas fa-shield-alt"></i></span><span class="stat-value">{{ jogador.defesa }}</span>
+                        <span class="stat-icon"><i class="fas fa-running"></i></span><span class="stat-value">{{ jogador.velocidade }}</span>
+                        <span class="stat-icon"><i class="fas fa-futbol"></i></span><span class="stat-value">{{ jogador.controle }}</span>
+                        <span class="stat-icon"><i class="fas fa-exchange-alt"></i></span><span class="stat-value">{{ jogador.passe }}</span>
+                    </span>
+                    <span class="avg-badge {% if jogador.media >= 7 %}avg-high{% elif jogador.media >= 5 %}avg-medium{% else %}avg-low{% endif %}">{{ jogador.media|floatformat:1 }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-title">Time 2</div>
+            <div class="team-average">Média: {{ media_time2 }}</div>
+            <div class="player-list">
+                {% for jogador in time2 %}
+                <div class="player-card">
+                    <span class="player-name">{{ jogador.nome }}</span>
+                    <span class="player-stats">
+                        <span class="stat-icon"><i class="fas fa-swords"></i></span><span class="stat-value">{{ jogador.ataque }}</span>
+                        <span class="stat-icon"><i class="fas fa-shield-alt"></i></span><span class="stat-value">{{ jogador.defesa }}</span>
+                        <span class="stat-icon"><i class="fas fa-running"></i></span><span class="stat-value">{{ jogador.velocidade }}</span>
+                        <span class="stat-icon"><i class="fas fa-futbol"></i></span><span class="stat-value">{{ jogador.controle }}</span>
+                        <span class="stat-icon"><i class="fas fa-exchange-alt"></i></span><span class="stat-value">{{ jogador.passe }}</span>
+                    </span>
+                    <span class="avg-badge {% if jogador.media >= 7 %}avg-high{% elif jogador.media >= 5 %}avg-medium{% else %}avg-low{% endif %}">{{ jogador.media|floatformat:1 }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% if time3 %}
+        <div class="team-card">
+            <div class="team-title">Time 3</div>
+            <div class="team-average">Média: {{ media_time3 }}</div>
+            <div class="player-list">
+                {% for jogador in time3 %}
+                <div class="player-card">
+                    <span class="player-name">{{ jogador.nome }}</span>
+                    <span class="player-stats">
+                        <span class="stat-icon"><i class="fas fa-swords"></i></span><span class="stat-value">{{ jogador.ataque }}</span>
+                        <span class="stat-icon"><i class="fas fa-shield-alt"></i></span><span class="stat-value">{{ jogador.defesa }}</span>
+                        <span class="stat-icon"><i class="fas fa-running"></i></span><span class="stat-value">{{ jogador.velocidade }}</span>
+                        <span class="stat-icon"><i class="fas fa-futbol"></i></span><span class="stat-value">{{ jogador.controle }}</span>
+                        <span class="stat-icon"><i class="fas fa-exchange-alt"></i></span><span class="stat-value">{{ jogador.passe }}</span>
+                    </span>
+                    <span class="avg-badge {% if jogador.media >= 7 %}avg-high{% elif jogador.media >= 5 %}avg-medium{% else %}avg-low{% endif %}">{{ jogador.media|floatformat:1 }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

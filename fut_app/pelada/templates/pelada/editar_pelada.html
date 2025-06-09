@@ -8,103 +8,219 @@
         background: #121212;
         color: #eee;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
         margin: 0;
         padding: 0;
+        min-height: 100vh;
     }
 
+    /* Layout Principal */
+    .page-container {
+        display: grid;
+        grid-template-areas:
+            "header header"
+            "stats stats"
+            "actions table"
+            "footer footer";
+        grid-template-columns: 200px 1fr;
+        grid-template-rows: auto auto 1fr auto;
+        min-height: 100vh;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    /* Header */
     .header-section {
+        grid-area: header;
         background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
-        padding: 2rem 0;
-        margin-bottom: 2rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
         border-bottom: 2px solid #00cc66;
-    }
-
-    .header-content {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 1rem;
     }
 
     .header-title {
         color: #00cc66;
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: 700;
         margin: 0;
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: 0.5rem;
     }
 
     .header-subtitle {
         color: #ccc;
-        margin-top: 0.5rem;
-        font-size: 1.1rem;
+        margin-top: 0.25rem;
+        font-size: 0.9rem;
     }
 
-    .players-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 1rem 4rem;
+    /* Mensagens de erro/sucesso */
+    .messages-section {
+        grid-area: header;
+        padding: 0.5rem;
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
     }
 
-    /* Seção de estatísticas */
+    .alert {
+        padding: 0.5rem;
+        border-radius: 4px;
+        margin-bottom: 0.5rem;
+    }
+
+    .alert-danger {
+        background-color: #e04e39;
+        color: #fff;
+    }
+
+    .alert-success {
+        background-color: #00cc66;
+        color: #121212;
+    }
+
+    .alert-auto-dismiss {
+        animation: fadeOut 0.5s ease-in-out 3s forwards;
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+    }
+
+    .messages-section {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        min-width: 300px;
+    }
+
+    .alert {
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .alert-danger {
+        background-color: #e04e39;
+        color: #fff;
+    }
+
+    .alert-success {
+        background-color: #00cc66;
+        color: #121212;
+    }
+
+    /* Estatísticas */
     .stats-section {
+        grid-area: stats;
         background: #1e1e1e;
-        border-radius: 15px;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-        box-shadow: 0 8px 25px rgba(0, 204, 102, 0.15);
+        padding: 0.5rem;
+        border-radius: 8px;
     }
 
     .stats-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 0.5rem;
     }
 
     .stat-card {
         background: #2a2a2a;
-        padding: 1.5rem;
-        border-radius: 12px;
+        padding: 0.5rem;
+        border-radius: 8px;
         text-align: center;
-        border: 2px solid #404040;
-        transition: all 0.3s ease;
-    }
-
-    .stat-card:hover {
-        border-color: #00cc66;
-        transform: translateY(-2px);
+        border: 1px solid #404040;
     }
 
     .stat-number {
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: 700;
         color: #00cc66;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.25rem;
     }
 
     .stat-label {
         color: #ccc;
-        font-size: 0.95rem;
+        font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 1px;
     }
 
-    /* Tabela de jogadores */
-    .players-table-wrapper {
+    /* Botões de Ação */
+    .actions-section {
+        grid-area: actions;
         background: #1e1e1e;
-        border-radius: 15px;
-        padding: 1.5rem;
-        box-shadow: 0 8px 25px rgba(0, 204, 102, 0.15);
-        margin-bottom: 2rem;
-        overflow-x: auto;
+        padding: 0.5rem;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .action-btn {
+        background: #2a2a2a;
+        border: 1px solid #404040;
+        color: #fff;
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        font-size: 0.85rem;
+        height: 30px;
+    }
+
+    .action-btn:hover {
+        background: #333;
+        border-color: #00cc66;
+        transform: translateY(-1px);
+    }
+
+    .action-btn.primary {
+        background: #00cc66;
+        color: #121212;
+        font-weight: 600;
+        min-width: 110px;
+        margin-top: -0.25rem;
+    }
+
+    .action-btn.primary:hover {
+        background: #00b85c;
+    }
+
+    /* Tabela de Jogadores */
+    .table-section {
+        grid-area: table;
+        background: #1e1e1e;
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 240px);
+    }
+
+    .players-table-wrapper {
+        flex: 1;
+        overflow: auto;
+        padding: 0.5rem;
+        max-height: calc(100vh - 290px);
     }
 
     .players-table {
         width: 100%;
-        min-width: 800px;
         border-collapse: separate;
         border-spacing: 0;
     }
@@ -114,318 +230,218 @@
         color: #121212;
         font-weight: 700;
         text-align: left;
+        position: sticky;
+        top: 0;
+        z-index: 10;
     }
 
     .table-header th {
-        padding: 1rem;
-        border: none;
-        font-size: 0.95rem;
-        vertical-align: middle;
-    }
-
-    .table-header th:first-child {
-        border-radius: 10px 0 0 0;
-    }
-
-    .table-header th:last-child {
-        border-radius: 0 10px 0 0;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+        white-space: nowrap;
     }
 
     .player-row {
         background: #2a2a2a;
         border-bottom: 1px solid #404040;
-        transition: all 0.3s ease;
     }
 
     .player-row:hover {
         background: rgba(0, 204, 102, 0.1);
-        transform: translateY(-1px);
-    }
-
-    .player-row:last-child {
-        border-bottom: none;
     }
 
     .player-row td {
-        padding: 1rem;
-        vertical-align: middle;
-        border: none;
+        padding: 0.4rem 0.75rem;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        border-right: 1px solid #404040;
     }
 
-    .player-name {
-        font-weight: 600;
-        color: #fff;
+    .player-row td:last-child {
+        border-right: none;
     }
 
     .player-name-input {
         background: #2a2a2a;
         border: 1px solid #404040;
         color: #fff;
-        padding: 0.5rem;
-        border-radius: 5px;
+        padding: 0.3rem;
+        border-radius: 4px;
         width: 100%;
-        max-width: 150px;
+        min-width: 120px;
+        transition: all 0.3s ease;
+    }
+
+    .player-name-input:focus {
+        background: #333;
+        border-color: #00cc66;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 204, 102, 0.2);
+    }
+
+    .player-name-input::selection {
+        background: #00cc66;
+        color: #fff;
     }
 
     .skill-input {
-        width: 60px;
+        width: 50px;
         background: #404040;
-        border: 2px solid #555;
-        border-radius: 8px;
+        border: 1px solid #555;
+        border-radius: 4px;
         color: #fff;
         text-align: center;
-        padding: 0.5rem;
+        padding: 0.3rem;
         font-weight: 600;
         transition: all 0.3s ease;
     }
 
     .skill-input:focus {
-        outline: none;
+        background: #333;
         border-color: #00cc66;
-        box-shadow: 0 0 0 3px rgba(0, 204, 102, 0.2);
-        background: #4a4a4a;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 204, 102, 0.2);
     }
 
-    .skill-input::-webkit-outer-spin-button,
-    .skill-input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    .skill-input[type=number] {
-        -moz-appearance: textfield;
-    }
-
-    /* Média do jogador */
-    .player-avg {
-        font-weight: 700;
-        text-align: center;
-        min-width: 50px;
+    .skill-input::selection {
+        background: #00cc66;
+        color: #fff;
     }
 
     .avg-badge {
         display: inline-block;
-        padding: 0.3rem 0.6rem;
-        border-radius: 20px;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
         font-size: 0.85rem;
-        background: #333;
-        color: #fff;
-    }
-
-    .avg-high {
-        background: #00cc66;
-        color: #121212;
-    }
-
-    .avg-medium {
-        background: #f7b500;
-        color: #121212;
-    }
-
-    .avg-low {
-        background: #e04e39;
-        color: #fff;
-    }
-
-    /* Botões de ação */
-    .action-buttons {
-        display: flex;
-        gap: 0.5rem;
-        justify-content: center;
-    }
-
-    .btn-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
-    }
-
-    .btn-delete {
-        background: #e04e39;
-        color: white;
-    }
-
-    .btn-delete:hover {
-        background: #c73e2f;
-        transform: scale(1.1);
-        box-shadow: 0 4px 12px rgba(224, 78, 57, 0.4);
-    }
-
-    /* Botão adicionar jogador */
-    .add-player-section {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        margin-bottom: 2rem;
-    }
-
-    .add-player-btn {
-        background: linear-gradient(135deg, #00cc66 0%, #00b85c 100%);
-        color: #121212;
-        border: none;
-        padding: 1rem 2rem;
-        border-radius: 50px;
-        font-weight: 700;
-        font-size: 1.1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        box-shadow: 0 6px 20px rgba(0, 204, 102, 0.3);
-    }
-
-    .add-player-btn:hover {
-        background: linear-gradient(135deg, #00b85c 0%, #00a651 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 204, 102, 0.4);
-    }
-
-    /* Mensagem quando não há jogadores */
-    .no-players-message {
-        background: #f7b500;
-        color: #121212;
-        border-radius: 12px;
-        padding: 1rem 1.5rem;
-        font-weight: 600;
+        min-width: 50px;
         text-align: center;
-        margin: 0 auto;
-        max-width: 500px;
     }
 
-    /* Botão flutuante */
-    .create-btn-wrapper {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        z-index: 1000;
+    .avg-high { background: #00cc66; color: #121212; }
+    .avg-medium { background: #f7b500; color: #121212; }
+    .avg-low { background: #e04e39; color: #fff; }
+
+    /* Footer com Botões de Ação */
+    .footer-section {
+        grid-area: footer;
+        background: #1e1e1e;
+        padding: 0.4rem 1rem;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        height: 40px;
+        margin-top: -0.5rem;
     }
 
-    .create-btn {
-        background: linear-gradient(135deg, #00cc66 0%, #00b85c 100%);
-        color: #121212;
-        font-size: 1.1rem;
-        padding: 1rem 2rem;
-        border-radius: 50px;
-        box-shadow: 0 8px 25px rgba(0, 204, 102, 0.4);
-        transition: all 0.3s ease;
+    .footer-section form {
+        margin: 0;
+        padding: 0;
         display: inline-flex;
-        align-items: center;
-        gap: 0.8rem;
-        text-decoration: none;
-        font-weight: 700;
     }
 
-    .create-btn:hover {
-        background: linear-gradient(135deg, #00b85c 0%, #00a651 100%);
-        box-shadow: 0 10px 30px rgba(0, 184, 92, 0.5);
-        transform: translateY(-3px);
-        color: #121212;
-    }
-
-    /* Botões secundários */
-    .btn-secondary-custom {
-        background: linear-gradient(135deg, #555 0%, #333 100%);
-        color: #eee;
-        border: none;
-        padding: 1rem 2rem;
-        border-radius: 50px;
-        font-weight: 700;
-        font-size: 1.1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn-secondary-custom:hover {
-        background: linear-gradient(135deg, #444 0%, #222 100%);
-        transform: translateY(-2px);
-    }
-
-    /* Botões primários */
-    .btn-primary-custom {
-        background: linear-gradient(135deg, #00cc66 0%, #00b85c 100%);
-        color: #121212;
-        border: none;
-        padding: 1rem 2rem;
-        border-radius: 50px;
-        font-weight: 700;
-        font-size: 1.1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        box-shadow: 0 6px 20px rgba(0, 204, 102, 0.3);
-    }
-
-    .btn-primary-custom:hover {
-        background: linear-gradient(135deg, #00b85c 0%, #00a651 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 204, 102, 0.4);
+    .footer-section button {
+        margin: 0;
+        height: 30px;
     }
 
     /* Responsividade */
-    @media (max-width: 768px) {
-        .header-title {
-            font-size: 1.5rem;
+    @media (max-width: 1024px) {
+        .page-container {
+            grid-template-areas:
+                "header header"
+                "stats stats"
+                "actions actions"
+                "table table"
+                "footer footer";
+            grid-template-columns: 1fr;
+        }
+
+        .actions-section {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            flex: 1;
+            min-width: 150px;
         }
 
         .players-table-wrapper {
-            padding: 1rem;
-        }
-
-        .table-header th,
-        .player-row td {
-            padding: 0.8rem;
-            font-size: 0.9rem;
-        }
-
-        .skill-input {
-            width: 50px;
-            padding: 0.3rem;
-        }
-
-        .create-btn {
-            padding: 0.8rem 1.5rem;
-            font-size: 1rem;
-        }
-
-        .stats-grid {
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-        }
-
-        .stat-card {
-            padding: 1rem;
-        }
-
-        .stat-number {
-            font-size: 1.5rem;
+            max-height: calc(100vh - 400px);
         }
     }
 
-    /* Checkbox estilizado */
+    @media (max-width: 768px) {
+        .page-container {
+            padding: 0.25rem;
+            gap: 0.25rem;
+        }
+
+        .header-title {
+            font-size: 1.3rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        }
+
+        .stat-number {
+            font-size: 1.3rem;
+        }
+
+        .action-btn {
+            min-width: 120px;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+        }
+
+        .player-row td {
+            padding: 0.3rem;
+            font-size: 0.8rem;
+        }
+
+        .player-name-input {
+            min-width: 100px;
+        }
+
+        .skill-input {
+            width: 45px;
+            padding: 0.3rem;
+        }
+    }
+
+    /* Scrollbar */
+    .players-table-wrapper::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    .players-table-wrapper::-webkit-scrollbar-track {
+        background: #1e1e1e;
+    }
+
+    .players-table-wrapper::-webkit-scrollbar-thumb {
+        background: #00cc66;
+        border-radius: 4px;
+    }
+
+    .players-table-wrapper::-webkit-scrollbar-thumb:hover {
+        background: #00b85c;
+    }
+
+    /* Checkbox */
     .checkbox-wrapper {
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
     }
 
     .custom-checkbox {
         position: relative;
-        width: 24px;
-        height: 24px;
+        display: inline-block;
+        cursor: pointer;
     }
 
     .custom-checkbox input {
@@ -437,15 +453,18 @@
     }
 
     .checkmark {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 24px;
-        width: 24px;
-        background-color: #404040;
-        border: 2px solid #666;
-        border-radius: 6px;
+        position: relative;
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+        background-color: #2a2a2a;
+        border: 2px solid #404040;
+        border-radius: 4px;
         transition: all 0.3s ease;
+    }
+
+    .custom-checkbox:hover input ~ .checkmark {
+        border-color: #00cc66;
     }
 
     .custom-checkbox input:checked ~ .checkmark {
@@ -457,34 +476,41 @@
         content: "";
         position: absolute;
         display: none;
+        left: 6px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
     }
 
     .custom-checkbox input:checked ~ .checkmark:after {
         display: block;
     }
-
-    .custom-checkbox .checkmark:after {
-        left: 7px;
-        top: 3px;
-        width: 6px;
-        height: 10px;
-        border: solid #121212;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-    }
 </style>
 
+<div class="page-container">
+    <!-- Header -->
 <div class="header-section">
-    <div class="header-content">
         <h1 class="header-title">
             <i class="fas fa-users"></i>
             Gerenciar Jogadores da Pelada {{ pelada.nome|default:"Nova Pelada" }}
         </h1>
         <p class="header-subtitle">Selecione os jogadores e defina suas habilidades para a pelada</p>
     </div>
-</div>
 
-<div class="players-container">
+    <!-- Mensagens de erro/sucesso -->
+    {% if messages %}
+    <div class="messages-section">
+        {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %} alert-auto-dismiss">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <!-- Estatísticas -->
     <div class="stats-section">
         <div class="stats-grid">
@@ -507,22 +533,23 @@
         </div>
     </div>
 
-    <!-- Botões de ação -->
-    <div class="add-player-section">
-        <button class="add-player-btn" onclick="addNewPlayer()" type="button">
+    <!-- Botões de Ação -->
+    <div class="actions-section">
+        <button class="action-btn" onclick="addNewPlayer()">
             <i class="fas fa-plus"></i>
-            Adicionar Novo Jogador
+            Adicionar Jogador
         </button>
-        <button class="btn-secondary-custom" onclick="addMultiplePlayers()" type="button">
+        <button class="action-btn" onclick="addMultiplePlayers()">
             <i class="fas fa-users"></i>
             Adicionar Vários
         </button>
     </div>
 
-    <!-- Tabela de jogadores -->
-    <div class="players-table-wrapper">
-        <form method="post" id="players-form" action="{% url 'salva_pelada' pelada.id|default:0 %}">
+    <!-- Tabela de Jogadores -->
+    <div class="table-section">
+        <form method="post" id="players-form" action="{% url 'salva_pelada' pelada.id|default:0 %}" enctype="multipart/form-data">
             {% csrf_token %}
+            <div class="players-table-wrapper">
             <table class="players-table">
                 <thead>
                     <tr class="table-header">
@@ -540,41 +567,40 @@
                 <tbody id="players-tbody">
                     {% for player in players %}
                     <tr class="player-row" data-player-id="{{ player.id }}">
-                        <td class="player-name">
-                            <input type="text" name="player_name" value="{{ player.nome|default:'' }}" class="player-name-input" required>
+                            <td>
+                                <input type="text" name="player_name_{{ player.id }}" value="{{ player.nome|default:'' }}" class="player-name-input" required>
                         </td>
                         <td>
                             <div class="checkbox-wrapper">
                                 <label class="custom-checkbox">
-                                    <input type="checkbox" name="player_selected" {% if player.selected %}checked{% endif %}>
+                                        <input type="checkbox" name="player_selected_{{ player.id }}" {% if player.selected %}checked{% endif %}>
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
                         </td>
                         <td>
-                            <input type="number" class="skill-input" name="player_attack" min="0" max="10" value="{{ player.ataque|default:5 }}" required>
+                                <input type="number" class="skill-input" name="player_attack_{{ player.id }}" min="0" max="10" value="{{ player.ataque|default:5 }}" required>
                         </td>
                         <td>
-                            <input type="number" class="skill-input" name="player_defense" min="0" max="10" value="{{ player.defesa|default:5 }}" required>
+                                <input type="number" class="skill-input" name="player_defense_{{ player.id }}" min="0" max="10" value="{{ player.defesa|default:5 }}" required>
                         </td>
                         <td>
-                            <input type="number" class="skill-input" name="player_speed" min="0" max="10" value="{{ player.velocidade|default:5 }}" required>
+                                <input type="number" class="skill-input" name="player_speed_{{ player.id }}" min="0" max="10" value="{{ player.velocidade|default:5 }}" required>
                         </td>
                         <td>
-                            <input type="number" class="skill-input" name="player_control" min="0" max="10" value="{{ player.controle|default:5 }}" required>
+                                <input type="number" class="skill-input" name="player_control_{{ player.id }}" min="0" max="10" value="{{ player.controle|default:5 }}" required>
                         </td>
                         <td>
-                            <input type="number" class="skill-input" name="player_pass" min="0" max="10" value="{{ player.passe|default:5 }}" required>
+                                <input type="number" class="skill-input" name="player_pass_{{ player.id }}" min="0" max="10" value="{{ player.passe|default:5 }}" required>
                         </td>
-                        <td class="player-avg">
+                            <td>
                             <span class="avg-badge {% if player.media >= 7 %}avg-high{% elif player.media >= 5 %}avg-medium{% else %}avg-low{% endif %}">
                                 {{ player.media|default:"0.0" }}
                             </span>
                         </td>
                         <td>
                             <div class="action-buttons">
-                                <input type="hidden" name="player_id" value="{{ player.id }}">
-                                <button type="button" class="btn-icon btn-delete" onclick="removePlayer('{{ player.id }}')" title="Remover jogador">
+                                    <button type="button" class="action-btn" onclick="removePlayer('{{ player.id }}')" title="Remover jogador">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
@@ -591,43 +617,103 @@
                     {% endfor %}
                 </tbody>
             </table>
+            </div>
         </form>
     </div>
 
-    <!-- Botões de ação -->
-    <div class="pelada-actions" style="display: flex; justify-content: space-between; margin-top: 2rem;">
-        <a href="{% url 'gerenciador' %}" class="btn-secondary-custom">
+    <!-- Footer com Botões de Ação -->
+    <div class="footer-section">
+        <a href="{% url 'gerenciador' %}" class="action-btn">
             <i class="fas fa-arrow-left"></i>
             Voltar
         </a>
-        <button type="submit" form="players-form" class="btn-primary-custom">
+        <form method="post" action="{% url 'sortear_times' pelada.id %}" style="display: inline; margin: 0;">
+            {% csrf_token %}
+            <input type="hidden" name="jogadores_selecionados[]" id="jogadores_selecionados">
+            <button type="submit" class="action-btn" style="background: #2d2d2d; color: #00cc66; margin: 0;" onclick="return prepararSorteio()">
+                <i class="fas fa-random"></i>
+                Sortear Times
+            </button>
+        </form>
+        <button type="submit" form="players-form" class="action-btn primary">
             <i class="fas fa-save"></i>
-            Salvar Configurações
+            Salvar Alterações
         </button>
     </div>
 </div>
 
 <script>
-    // Calcular média de um jogador
-    function calculatePlayerAverage(playerRow) {
-        const attack = parseInt(playerRow.querySelector('input[name*="attack"]').value) || 0;
-        const defense = parseInt(playerRow.querySelector('input[name*="defense"]').value) || 0;
-        const speed = parseInt(playerRow.querySelector('input[name*="speed"]').value) || 0;
-        const control = parseInt(playerRow.querySelector('input[name*="control"]').value) || 0;
-        const pass = parseInt(playerRow.querySelector('input[name*="pass"]').value) || 0;
-        
-        return (attack + defense + speed + control + pass) / 5;
+    document.addEventListener('DOMContentLoaded', function() {
+        // Adiciona eventos para os inputs de habilidades
+        document.querySelectorAll('.skill-input').forEach(input => {
+            input.addEventListener('input', function() {
+                updatePlayerAverage(this.closest('.player-row'));
+            });
+        });
+
+        // Atualiza as médias de todos os jogadores ao carregar a página
+        document.querySelectorAll('.player-row').forEach(row => {
+            updatePlayerAverage(row);
+        });
+
+        // Atualiza o contador de selecionados e a média dos selecionados
+        function updateSelectedCountAndAverage() {
+            const checkboxes = document.querySelectorAll('input[type=checkbox][name^=player_selected_]');
+            let count = 0;
+            let sum = 0;
+            let selectedRows = 0;
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    count++;
+                    const row = cb.closest('.player-row');
+                    if (row) {
+                        const avg = parseFloat(row.querySelector('.avg-badge').textContent);
+                        if (!isNaN(avg)) {
+                            sum += avg;
+                            selectedRows++;
+                        }
+                    }
+                }
+            });
+            document.getElementById('selected-players').textContent = count;
+            document.getElementById('avg-selected').textContent = selectedRows > 0 ? (sum / selectedRows).toFixed(1) : '0.0';
+        }
+
+        updateSelectedCountAndAverage();
+
+        document.querySelectorAll('input[type=checkbox][name^=player_selected_]').forEach(cb => {
+            cb.addEventListener('change', updateSelectedCountAndAverage);
+        });
+
+        // Atualiza contador ao adicionar/remover jogadores
+        window.updateSelectedCountAndAverage = updateSelectedCountAndAverage;
+
+        // Função para remover as mensagens após a animação
+        const alerts = document.querySelectorAll('.alert-auto-dismiss');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                alert.remove();
+            }, 3500); // 3.5 segundos (3s de exibição + 0.5s de animação)
+        });
+    });
+
+    // Função para calcular a média de um jogador
+    function calculateAverage(row) {
+        const inputs = row.querySelectorAll('.skill-input');
+        let sum = 0;
+        inputs.forEach(input => {
+            sum += parseFloat(input.value) || 0;
+        });
+        return (sum / inputs.length).toFixed(1);
     }
 
-    // Atualizar média de um jogador
-    function updatePlayerAverage(playerRow) {
-        const average = calculatePlayerAverage(playerRow);
-        const avgBadge = playerRow.querySelector('.avg-badge');
-        
-        avgBadge.textContent = average.toFixed(1);
-        
-        // Atualizar classe de cor
-        avgBadge.classList.remove('avg-high', 'avg-medium', 'avg-low');
+    // Função para atualizar a média de um jogador
+    function updatePlayerAverage(row) {
+        const average = calculateAverage(row);
+        const avgBadge = row.querySelector('.avg-badge');
+        avgBadge.textContent = average;
+        // Atualiza a classe do badge baseado na média
+        avgBadge.className = 'avg-badge';
         if (average >= 7) {
             avgBadge.classList.add('avg-high');
         } else if (average >= 5) {
@@ -635,228 +721,135 @@
         } else {
             avgBadge.classList.add('avg-low');
         }
+        updateOverallStats();
     }
 
-    // Atualizar estatísticas gerais
-    function updateStats() {
-        const playerRows = document.querySelectorAll('#players-tbody tr');
-        let totalPlayers = playerRows.length;
-        let selectedPlayers = 0;
+    // Função para atualizar as estatísticas gerais
+    function updateOverallStats() {
+        const rows = document.querySelectorAll('.player-row');
+        let totalPlayers = rows.length;
         let totalAverage = 0;
-        let selectedAverage = 0;
-        
-        playerRows.forEach(row => {
-            if (row.querySelector('.no-players-message')) return;
-            
-            const isSelected = row.querySelector('input[type="checkbox"]').checked;
-            const playerAvg = calculatePlayerAverage(row);
-            
-            totalAverage += playerAvg;
-            
-            if (isSelected) {
-                selectedPlayers++;
-                selectedAverage += playerAvg;
-            }
+        rows.forEach(row => {
+            totalAverage += parseFloat(row.querySelector('.avg-badge').textContent);
         });
-        
-        // Atualizar estatísticas na página
+        const overallAverage = totalPlayers > 0 ? (totalAverage / totalPlayers).toFixed(1) : '0.0';
         document.getElementById('total-players').textContent = totalPlayers;
-        document.getElementById('selected-players').textContent = selectedPlayers;
-        
-        const avgRating = totalPlayers > 0 ? (totalAverage / totalPlayers).toFixed(1) : 0;
-        document.getElementById('avg-rating').textContent = avgRating;
-        
-        const avgSelected = selectedPlayers > 0 ? (selectedAverage / selectedPlayers).toFixed(1) : 0;
-        document.getElementById('avg-selected').textContent = avgSelected;
+        document.getElementById('avg-rating').textContent = overallAverage;
     }
 
-    // Adicionar novo jogador
+    // Função para adicionar um novo jogador
     function addNewPlayer() {
-        const name = prompt('Digite o nome do novo jogador:');
-        if (name && name.trim()) {
             const tbody = document.getElementById('players-tbody');
-            
-            // Remove a mensagem de "Nenhum jogador" se existir
-            const noPlayersMsg = tbody.querySelector('.no-players-message');
-            if (noPlayersMsg) {
-                noPlayersMsg.closest('tr').remove();
-            }
-            
-            const newId = 'new_' + Date.now();
-            
             const newRow = document.createElement('tr');
+        const tempId = 'new_' + Date.now();
             newRow.className = 'player-row';
-            newRow.dataset.playerId = newId;
+        newRow.setAttribute('data-player-id', tempId);
             newRow.innerHTML = `
-                <td class="player-name">
-                    <input type="text" name="player_name" value="${name.trim()}" class="player-name-input" required>
+            <td>
+                <input type="text" name="player_name_${tempId}" class="player-name-input" required>
                 </td>
                 <td>
                     <div class="checkbox-wrapper">
                         <label class="custom-checkbox">
-                            <input type="checkbox" name="player_selected">
+                        <input type="checkbox" name="player_selected_${tempId}" checked>
                             <span class="checkmark"></span>
                         </label>
                     </div>
                 </td>
                 <td>
-                    <input type="number" class="skill-input" name="player_attack" min="0" max="10" value="5" required>
+                <input type="number" class="skill-input" name="player_attack_${tempId}" min="0" max="10" value="5" required>
                 </td>
                 <td>
-                    <input type="number" class="skill-input" name="player_defense" min="0" max="10" value="5" required>
+                <input type="number" class="skill-input" name="player_defense_${tempId}" min="0" max="10" value="5" required>
                 </td>
                 <td>
-                    <input type="number" class="skill-input" name="player_speed" min="0" max="10" value="5" required>
+                <input type="number" class="skill-input" name="player_speed_${tempId}" min="0" max="10" value="5" required>
                 </td>
                 <td>
-                    <input type="number" class="skill-input" name="player_control" min="0" max="10" value="5" required>
+                <input type="number" class="skill-input" name="player_control_${tempId}" min="0" max="10" value="5" required>
                 </td>
                 <td>
-                    <input type="number" class="skill-input" name="player_pass" min="0" max="10" value="5" required>
+                <input type="number" class="skill-input" name="player_pass_${tempId}" min="0" max="10" value="5" required>
                 </td>
-                <td class="player-avg">
+            <td>
                     <span class="avg-badge avg-medium">5.0</span>
                 </td>
                 <td>
                     <div class="action-buttons">
-                        <input type="hidden" name="player_id" value="${newId}">
-                        <button type="button" class="btn-icon btn-delete" onclick="removePlayer('${newId}')" title="Remover jogador">
+                    <button type="button" class="action-btn" onclick="removePlayer(this)" title="Remover jogador">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
                 </td>
             `;
-            
             tbody.appendChild(newRow);
-            updateStats();
-            
-            // Feedback visual
-            newRow.style.background = 'rgba(0, 204, 102, 0.3)';
-            setTimeout(() => {
-                newRow.style.background = '';
-            }, 2000);
-        }
-    }
-
-    // Adicionar múltiplos jogadores
-    function addMultiplePlayers() {
-        const names = prompt('Digite os nomes dos jogadores separados por vírgula:');
-        if (names && names.trim()) {
-            const nameList = names.split(',').map(name => name.trim()).filter(name => name);
-            const tbody = document.getElementById('players-tbody');
-            
-            // Remove a mensagem de "Nenhum jogador" se existir
-            const noPlayersMsg = tbody.querySelector('.no-players-message');
-            if (noPlayersMsg) {
-                noPlayersMsg.closest('tr').remove();
-            }
-            
-            nameList.forEach(name => {
-                if (name) {
-                    const newId = 'new_' + (Date.now() + Math.floor(Math.random() * 1000));
-                    
-                    const newRow = document.createElement('tr');
-                    newRow.className = 'player-row';
-                    newRow.dataset.playerId = newId;
-                    newRow.innerHTML = `
-                        <td class="player-name">
-                            <input type="text" name="player_name" value="${name}" class="player-name-input" required>
-                        </td>
-                        <td>
-                            <div class="checkbox-wrapper">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" name="player_selected">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </td>
-                        <td>
-                            <input type="number" class="skill-input" name="player_attack" min="0" max="10" value="5" required>
-                        </td>
-                        <td>
-                            <input type="number" class="skill-input" name="player_defense" min="0" max="10" value="5" required>
-                        </td>
-                        <td>
-                            <input type="number" class="skill-input" name="player_speed" min="0" max="10" value="5" required>
-                        </td>
-                        <td>
-                            <input type="number" class="skill-input" name="player_control" min="0" max="10" value="5" required>
-                        </td>
-                        <td>
-                            <input type="number" class="skill-input" name="player_pass" min="0" max="10" value="5" required>
-                        </td>
-                        <td class="player-avg">
-                            <span class="avg-badge avg-medium">5.0</span>
-                        </td>
-                        <td>
-                            <div class="action-buttons">
-                                <input type="hidden" name="player_id" value="${newId}">
-                                <button type="button" class="btn-icon btn-delete" onclick="removePlayer('${newId}')" title="Remover jogador">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                    
-                    tbody.appendChild(newRow);
-                }
+        // Adiciona eventos para os novos inputs
+        newRow.querySelectorAll('.skill-input').forEach(input => {
+            input.addEventListener('input', function() {
+                updatePlayerAverage(this.closest('.player-row'));
             });
-            
-            updateStats();
-            alert(`${nameList.length} jogador(es) adicionado(s) com sucesso!`);
+        });
+        // Adiciona evento para o novo checkbox
+        newRow.querySelectorAll('input[type=checkbox][name^=player_selected_]').forEach(cb => {
+            cb.addEventListener('change', window.updateSelectedCountAndAverage);
+        });
+        updatePlayerAverage(newRow);
+        updateSelectedCountAndAverage();
+    }
+
+    // Função para adicionar múltiplos jogadores
+    function addMultiplePlayers() {
+        const count = prompt('Quantos jogadores deseja adicionar?', '1');
+        if (count && !isNaN(count)) {
+            for (let i = 0; i < parseInt(count); i++) {
+                addNewPlayer();
+            }
         }
     }
 
-    // Remover jogador
-    function removePlayer(playerId) {
-        // Encontra a linha do jogador de duas formas diferentes:
-        // 1. Procurando pelo atributo data-player-id
-        // 2. Procurando pelo input hidden com o player_id
-        let row = document.querySelector(`tr[data-player-id="${playerId}"]`);
-        
-        if (!row) {
-            // Se não encontrou pelo data-attribute, tenta pelo input hidden
-            const input = document.querySelector(`input[name="player_id"][value="${playerId}"]`);
-            if (input) {
-                row = input.closest('tr');
-            }
+    // Função para remover um jogador
+    function removePlayer(button) {
+        const row = button.closest('.player-row');
+        const playerId = row.getAttribute('data-player-id');
+        if (!playerId.startsWith('new_')) {
+            // Adiciona um campo oculto para marcar o jogador como removido
+            const form = document.getElementById('players-form');
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'player_removed_' + playerId;
+            input.value = 'true';
+            form.appendChild(input);
         }
-        
-        if (row && confirm('Tem certeza que deseja remover este jogador?')) {
             row.remove();
-            updateStats();
-            
-            // Se não houver mais jogadores, mostra a mensagem
-            const tbody = document.getElementById('players-tbody');
-            if (tbody.children.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="9" class="text-center">
-                            <div class="no-players-message">
-                                Nenhum jogador cadastrado ainda
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }
-        }
+        updateOverallStats();
+        updateSelectedCountAndAverage();
     }
 
-    // Inicializar eventos
-    document.addEventListener('DOMContentLoaded', function() {
-        // Atualizar médias quando os valores mudam
-        document.getElementById('players-tbody').addEventListener('change', function(e) {
-            if (e.target.classList.contains('skill-input') || e.target.type === 'checkbox') {
-                const playerRow = e.target.closest('tr');
-                if (playerRow) {
-                    updatePlayerAverage(playerRow);
-                    updateStats();
-                }
+    function prepararSorteio() {
+        const checkboxes = document.querySelectorAll('input[type=checkbox][name^=player_selected_]');
+        const jogadoresSelecionados = [];
+        let count = 0;
+        
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                count++;
+                const playerId = cb.name.split('_')[2];
+                jogadoresSelecionados.push(playerId);
             }
         });
-
-        // Atualizar estatísticas iniciais
-        updateStats();
-    });
+        
+        if (count < 12) {
+            alert('É necessário selecionar pelo menos 12 jogadores para sortear os times.');
+            return false;
+        }
+        
+        if (count > 18) {
+            alert('O número máximo de jogadores selecionados é 18 (6 jogadores por time).');
+            return false;
+        }
+        
+        document.getElementById('jogadores_selecionados').value = JSON.stringify(jogadoresSelecionados);
+        return true;
+    }
 </script>
 {% endblock %}

@@ -16,12 +16,16 @@
     }
 
     .header-section {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        border-bottom: 2px solid #00cc66;
     }
 
     .header-title {
         color: #00cc66;
-        font-size: 2rem;
+        font-size: 1.8rem;
         margin: 0;
         display: flex;
         align-items: center;
@@ -31,6 +35,7 @@
     .header-subtitle {
         color: #aaa;
         margin-top: 5px;
+        font-size: 0.95rem;
     }
 
     /* Estilo de planilha */
@@ -43,19 +48,21 @@
 
     .sheet-header {
         display: grid;
-        grid-template-columns: 2fr 3fr 1.5fr 1.5fr;
-        background: #00cc66;
+        grid-template-columns: 2fr 3fr 1.5fr 1fr;
+        background: linear-gradient(135deg, #00cc66 0%, #00b85c 100%);
         color: #121212;
         font-weight: bold;
         padding: 12px 15px;
+        font-size: 0.95rem;
     }
 
     .sheet-row {
         display: grid;
-        grid-template-columns: 2fr 3fr 1.5fr 1.5fr;
+        grid-template-columns: 2fr 3fr 1.5fr 1fr;
         padding: 12px 15px;
         border-bottom: 1px solid #333;
         align-items: center;
+        transition: background-color 0.2s ease;
     }
 
     .sheet-row:nth-child(even) {
@@ -71,22 +78,30 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-size: 0.9rem;
     }
 
     .sheet-actions {
         display: flex;
         gap: 8px;
+        justify-content: flex-end;
+        align-items: center;
+        height: 100%;
     }
 
     .sheet-btn {
-        padding: 6px 12px;
+        padding: 6px;
         border-radius: 4px;
         font-size: 0.85rem;
         cursor: pointer;
         border: none;
         display: flex;
         align-items: center;
-        gap: 5px;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        transition: all 0.2s ease;
+        text-decoration: none;
     }
 
     .edit-btn {
@@ -94,9 +109,33 @@
         color: #121212;
     }
 
+    .edit-btn:hover {
+        background: #e6a800;
+        transform: translateY(-1px);
+        color: #121212;
+    }
+
     .delete-btn {
         background: #e04e39;
         color: white;
+        padding: 0;
+        display: inline-flex;
+    }
+
+    .delete-btn:hover {
+        background: #d13c27;
+        transform: translateY(-1px);
+        color: white;
+    }
+
+    .sheet-cell:last-child {
+        padding-right: 15px;
+    }
+
+    form {
+        margin: 0;
+        padding: 0;
+        display: inline;
     }
 
     /* Mensagem quando não há peladas */
@@ -104,6 +143,14 @@
         text-align: center;
         padding: 40px 20px;
         color: #aaa;
+        font-size: 1.1rem;
+    }
+
+    .empty-message i {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        color: #00cc66;
+        opacity: 0.5;
     }
 
     /* Botão flutuante */
@@ -121,16 +168,43 @@
         align-items: center;
         gap: 8px;
         box-shadow: 0 4px 12px rgba(0, 204, 102, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .floating-btn:hover {
+        background: #00b85c;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 204, 102, 0.4);
+        color: #121212;
     }
 
     @media (max-width: 768px) {
+        .peladas-container {
+            padding: 15px;
+        }
+
+        .header-section {
+            padding: 0.8rem 1rem;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+        }
+
         .sheet-header, .sheet-row {
-            grid-template-columns: 1.5fr 2fr 1fr 1.2fr;
+            grid-template-columns: 1.5fr 2fr 1fr 0.8fr;
+            padding: 10px;
         }
         
+        .sheet-cell {
+            font-size: 0.85rem;
+            padding: 6px 3px;
+        }
+
         .sheet-btn {
-            padding: 6px 8px;
-            font-size: 0.8rem;
+            width: 28px;
+            height: 28px;
+            padding: 5px;
         }
         
         .floating-btn {
@@ -139,6 +213,49 @@
             padding: 10px 20px;
             font-size: 0.9rem;
         }
+    }
+
+    .alert-auto-dismiss {
+        animation: fadeOut 0.5s ease-in-out 3s forwards;
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+    }
+
+    .messages-section {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        min-width: 300px;
+    }
+
+    .alert {
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .alert-danger {
+        background-color: #e04e39;
+        color: #fff;
+    }
+
+    .alert-success {
+        background-color: #00cc66;
+        color: #121212;
     }
 </style>
 
@@ -150,6 +267,16 @@
         </h1>
         <p class="header-subtitle">Gerencie suas peladas ou participe de novas</p>
     </div>
+
+    {% if messages %}
+    <div class="messages-section">
+        {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %} alert-auto-dismiss">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
     <div class="sheet-container">
         <!-- Cabeçalho da planilha -->
@@ -171,14 +298,13 @@
                 <div class="sheet-cell">{{ pelada.criador.username }}</div>
                 <div class="sheet-cell">
                     <div class="sheet-actions">
-                        <a href="{% url 'editar_pelada' pelada.id %}" class="sheet-btn edit-btn">
-                            <i class="fas fa-eye"></i> 
+                        <a href="{% url 'editar_pelada' pelada.id %}" class="sheet-btn edit-btn" title="Editar">
+                            <i class="fas fa-edit"></i>
                         </a>
                         <form method="post" action="{% url 'excluir_pelada' pelada.id %}" style="display: inline;">
                             {% csrf_token %}
-                            <button type="submit" class="sheet-btn delete-btn" 
-                                    onclick="return confirm('Tem certeza que deseja excluir esta pelada?')">
-                                <i class="fas fa-trash"></i> 
+                            <button type="submit" class="sheet-btn delete-btn" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir esta pelada?')">
+                                <i class="fas fa-trash"></i>
                             </button>
                         </form>
                     </div>
@@ -197,4 +323,16 @@
         <i class="fas fa-plus"></i> Nova Pelada
     </a>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Função para remover as mensagens após a animação
+        const alerts = document.querySelectorAll('.alert-auto-dismiss');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                alert.remove();
+            }, 3500); // 3.5 segundos (3s de exibição + 0.5s de animação)
+        });
+    });
+</script>
 {% endblock %}
