@@ -547,7 +547,7 @@
 
     <!-- Tabela de Jogadores -->
     <div class="table-section">
-        <form method="post" id="players-form" action="{% url 'salva_pelada' pelada.id|default:0 %}" enctype="multipart/form-data">
+        <form method="post" id="players-form" action="{% url 'salva_pelada' pelada.id %}" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="players-table-wrapper">
             <table class="players-table">
@@ -567,40 +567,40 @@
                 <tbody id="players-tbody">
                     {% for player in players %}
                     <tr class="player-row" data-player-id="{{ player.id }}">
-                            <td>
-                                <input type="text" name="player_name_{{ player.id }}" value="{{ player.nome|default:'' }}" class="player-name-input" required>
+                        <td>
+                            <input type="text" name="player_name_{{ player.id }}" value="{{ player.nome|default:'' }}" class="player-name-input" required>
                         </td>
                         <td>
                             <div class="checkbox-wrapper">
                                 <label class="custom-checkbox">
-                                        <input type="checkbox" name="player_selected_{{ player.id }}" {% if player.selected %}checked{% endif %}>
+                                    <input type="checkbox" name="player_selected_{{ player.id }}" {% if player.selected %}checked{% endif %}>
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
                         </td>
                         <td>
-                                <input type="number" class="skill-input" name="player_attack_{{ player.id }}" min="0" max="10" value="{{ player.ataque|default:5 }}" required>
+                            <input type="number" class="skill-input" name="player_attack_{{ player.id }}" min="0" max="10" value="{{ player.ataque|default:5 }}" required>
                         </td>
                         <td>
-                                <input type="number" class="skill-input" name="player_defense_{{ player.id }}" min="0" max="10" value="{{ player.defesa|default:5 }}" required>
+                            <input type="number" class="skill-input" name="player_defense_{{ player.id }}" min="0" max="10" value="{{ player.defesa|default:5 }}" required>
                         </td>
                         <td>
-                                <input type="number" class="skill-input" name="player_speed_{{ player.id }}" min="0" max="10" value="{{ player.velocidade|default:5 }}" required>
+                            <input type="number" class="skill-input" name="player_speed_{{ player.id }}" min="0" max="10" value="{{ player.velocidade|default:5 }}" required>
                         </td>
                         <td>
-                                <input type="number" class="skill-input" name="player_control_{{ player.id }}" min="0" max="10" value="{{ player.controle|default:5 }}" required>
+                            <input type="number" class="skill-input" name="player_control_{{ player.id }}" min="0" max="10" value="{{ player.controle|default:5 }}" required>
                         </td>
                         <td>
-                                <input type="number" class="skill-input" name="player_pass_{{ player.id }}" min="0" max="10" value="{{ player.passe|default:5 }}" required>
+                            <input type="number" class="skill-input" name="player_pass_{{ player.id }}" min="0" max="10" value="{{ player.passe|default:5 }}" required>
                         </td>
-                            <td>
+                        <td>
                             <span class="avg-badge {% if player.media >= 7 %}avg-high{% elif player.media >= 5 %}avg-medium{% else %}avg-low{% endif %}">
                                 {{ player.media|default:"0.0" }}
                             </span>
                         </td>
                         <td>
                             <div class="action-buttons">
-                                    <button type="button" class="action-btn" onclick="removePlayer('{{ player.id }}')" title="Remover jogador">
+                                <button type="button" class="action-btn" onclick="removePlayer(this)" title="Remover jogador">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
@@ -739,60 +739,61 @@
 
     // Função para adicionar um novo jogador
     function addNewPlayer() {
-            const tbody = document.getElementById('players-tbody');
-            const newRow = document.createElement('tr');
+        const tbody = document.getElementById('players-tbody');
+        const newRow = document.createElement('tr');
         const tempId = 'new_' + Date.now();
-            newRow.className = 'player-row';
+        newRow.className = 'player-row';
         newRow.setAttribute('data-player-id', tempId);
-            newRow.innerHTML = `
+        newRow.innerHTML = `
             <td>
                 <input type="text" name="player_name_${tempId}" class="player-name-input" required>
-                </td>
-                <td>
-                    <div class="checkbox-wrapper">
-                        <label class="custom-checkbox">
-                        <input type="checkbox" name="player_selected_${tempId}" checked>
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                </td>
-                <td>
-                <input type="number" class="skill-input" name="player_attack_${tempId}" min="0" max="10" value="5" required>
-                </td>
-                <td>
-                <input type="number" class="skill-input" name="player_defense_${tempId}" min="0" max="10" value="5" required>
-                </td>
-                <td>
-                <input type="number" class="skill-input" name="player_speed_${tempId}" min="0" max="10" value="5" required>
-                </td>
-                <td>
-                <input type="number" class="skill-input" name="player_control_${tempId}" min="0" max="10" value="5" required>
-                </td>
-                <td>
-                <input type="number" class="skill-input" name="player_pass_${tempId}" min="0" max="10" value="5" required>
-                </td>
+            </td>
             <td>
-                    <span class="avg-badge avg-medium">5.0</span>
-                </td>
-                <td>
-                    <div class="action-buttons">
+                <div class="checkbox-wrapper">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" name="player_selected_${tempId}" checked>
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </td>
+            <td>
+                <input type="number" class="skill-input" name="player_attack_${tempId}" min="0" max="10" value="5" required>
+            </td>
+            <td>
+                <input type="number" class="skill-input" name="player_defense_${tempId}" min="0" max="10" value="5" required>
+            </td>
+            <td>
+                <input type="number" class="skill-input" name="player_speed_${tempId}" min="0" max="10" value="5" required>
+            </td>
+            <td>
+                <input type="number" class="skill-input" name="player_control_${tempId}" min="0" max="10" value="5" required>
+            </td>
+            <td>
+                <input type="number" class="skill-input" name="player_pass_${tempId}" min="0" max="10" value="5" required>
+            </td>
+            <td>
+                <span class="avg-badge avg-medium">5.0</span>
+            </td>
+            <td>
+                <div class="action-buttons">
                     <button type="button" class="action-btn" onclick="removePlayer(this)" title="Remover jogador">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            `;
-            tbody.appendChild(newRow);
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(newRow);
+        
         // Adiciona eventos para os novos inputs
         newRow.querySelectorAll('.skill-input').forEach(input => {
             input.addEventListener('input', function() {
                 updatePlayerAverage(this.closest('.player-row'));
             });
         });
+        
         // Adiciona evento para o novo checkbox
-        newRow.querySelectorAll('input[type=checkbox][name^=player_selected_]').forEach(cb => {
-            cb.addEventListener('change', window.updateSelectedCountAndAverage);
-        });
+        newRow.querySelector('input[type=checkbox]').addEventListener('change', updateSelectedCountAndAverage);
+        
         updatePlayerAverage(newRow);
         updateSelectedCountAndAverage();
     }
@@ -811,6 +812,7 @@
     function removePlayer(button) {
         const row = button.closest('.player-row');
         const playerId = row.getAttribute('data-player-id');
+        
         if (!playerId.startsWith('new_')) {
             // Adiciona um campo oculto para marcar o jogador como removido
             const form = document.getElementById('players-form');
@@ -820,7 +822,8 @@
             input.value = 'true';
             form.appendChild(input);
         }
-            row.remove();
+        
+        row.remove();
         updateOverallStats();
         updateSelectedCountAndAverage();
     }

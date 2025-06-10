@@ -81,30 +81,42 @@ def salva_pelada(request, pelada_id):
             
             # Processa os dados do formulário
             for key, value in request.POST.items():
-                if key.startswith('player_'):
-                    parts = key.split('_')
-                    if len(parts) >= 3:
-                        field = parts[1]
-                        player_id = parts[2]
-                        
-                        if player_id.startswith('new_'):
-                            # Cria um novo jogador
-                            if field == 'name':
-                                player = ParticipantePelada.objects.create(
-                                    pelada=pelada,
-                                    nome=value,
-                                    selected=request.POST.get(f'player_selected_{player_id}') == 'on',
-                                    ataque=int(request.POST.get(f'player_attack_{player_id}', 5)),
-                                    defesa=int(request.POST.get(f'player_defense_{player_id}', 5)),
-                                    velocidade=int(request.POST.get(f'player_speed_{player_id}', 5)),
-                                    controle=int(request.POST.get(f'player_control_{player_id}', 5)),
-                                    passe=int(request.POST.get(f'player_pass_{player_id}', 5))
-                                )
-                                existing_players[player_id] = player
-                        elif player_id in existing_players:
-                            player = existing_players[player_id]
-                            # Atualiza todos os campos de uma vez
-                            player.nome = request.POST.get(f'player_name_{player_id}', player.nome)
+                if key.startswith('player_name_'):
+                    player_id = key.split('_')[2]
+                    
+                    if player_id == 'new':
+                        # Cria um novo jogador
+                        try:
+                            # Obtém todos os valores necessários
+                            nome = value
+                            selected = request.POST.get(f'player_selected_{player_id}') == 'on'
+                            ataque = int(request.POST.get(f'player_attack_{player_id}', 5))
+                            defesa = int(request.POST.get(f'player_defense_{player_id}', 5))
+                            velocidade = int(request.POST.get(f'player_speed_{player_id}', 5))
+                            controle = int(request.POST.get(f'player_control_{player_id}', 5))
+                            passe = int(request.POST.get(f'player_pass_{player_id}', 5))
+                            
+                            # Cria o novo jogador
+                            player = ParticipantePelada.objects.create(
+                                pelada=pelada,
+                                usuario=pelada.criador,
+                                nome=nome,
+                                selected=selected,
+                                ataque=ataque,
+                                defesa=defesa,
+                                velocidade=velocidade,
+                                controle=controle,
+                                passe=passe
+                            )
+                            existing_players[str(player.id)] = player
+                        except Exception as e:
+                            messages.error(request, f'Erro ao criar jogador: {str(e)}')
+                            continue
+                    elif player_id in existing_players:
+                        player = existing_players[player_id]
+                        try:
+                            # Atualiza todos os campos
+                            player.nome = value
                             player.selected = request.POST.get(f'player_selected_{player_id}') == 'on'
                             player.ataque = int(request.POST.get(f'player_attack_{player_id}', player.ataque))
                             player.defesa = int(request.POST.get(f'player_defense_{player_id}', player.defesa))
@@ -112,13 +124,21 @@ def salva_pelada(request, pelada_id):
                             player.controle = int(request.POST.get(f'player_control_{player_id}', player.controle))
                             player.passe = int(request.POST.get(f'player_pass_{player_id}', player.passe))
                             player.save()
+                        except Exception as e:
+                            messages.error(request, f'Erro ao atualizar jogador: {str(e)}')
+                            continue
             
             # Processa jogadores removidos
             for key, value in request.POST.items():
                 if key.startswith('player_removed_'):
                     player_id = key.split('_')[2]
                     if player_id in existing_players:
-                        existing_players[player_id].delete()
+                        try:
+                            player = existing_players[player_id]
+                            player.delete()
+                        except Exception as e:
+                            messages.error(request, f'Erro ao remover jogador: {str(e)}')
+                            continue
             
             messages.success(request, 'Alterações salvas com sucesso!')
             return redirect('editar_pelada', pelada_id=pelada.id)
