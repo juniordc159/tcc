@@ -90,11 +90,11 @@ def salva_pelada(request, pelada_id):
                             # Obtém todos os valores necessários
                             nome = value
                             selected = request.POST.get(f'player_selected_{player_id}') == 'on'
-                            ataque = int(request.POST.get(f'player_attack_{player_id}', 5))
-                            defesa = int(request.POST.get(f'player_defense_{player_id}', 5))
-                            velocidade = int(request.POST.get(f'player_speed_{player_id}', 5))
-                            controle = int(request.POST.get(f'player_control_{player_id}', 5))
-                            passe = int(request.POST.get(f'player_pass_{player_id}', 5))
+                            ataque = min(max(int(request.POST.get(f'player_attack_{player_id}', 3)), 1), 5)
+                            defesa = min(max(int(request.POST.get(f'player_defense_{player_id}', 3)), 1), 5)
+                            velocidade = min(max(int(request.POST.get(f'player_speed_{player_id}', 3)), 1), 5)
+                            controle = min(max(int(request.POST.get(f'player_control_{player_id}', 3)), 1), 5)
+                            passe = min(max(int(request.POST.get(f'player_pass_{player_id}', 3)), 1), 5)
                             
                             # Cria o novo jogador
                             player = ParticipantePelada.objects.create(
@@ -118,11 +118,11 @@ def salva_pelada(request, pelada_id):
                             # Atualiza todos os campos
                             player.nome = value
                             player.selected = request.POST.get(f'player_selected_{player_id}') == 'on'
-                            player.ataque = int(request.POST.get(f'player_attack_{player_id}', player.ataque))
-                            player.defesa = int(request.POST.get(f'player_defense_{player_id}', player.defesa))
-                            player.velocidade = int(request.POST.get(f'player_speed_{player_id}', player.velocidade))
-                            player.controle = int(request.POST.get(f'player_control_{player_id}', player.controle))
-                            player.passe = int(request.POST.get(f'player_pass_{player_id}', player.passe))
+                            player.ataque = min(max(int(request.POST.get(f'player_attack_{player_id}', player.ataque)), 1), 5)
+                            player.defesa = min(max(int(request.POST.get(f'player_defense_{player_id}', player.defesa)), 1), 5)
+                            player.velocidade = min(max(int(request.POST.get(f'player_speed_{player_id}', player.velocidade)), 1), 5)
+                            player.controle = min(max(int(request.POST.get(f'player_control_{player_id}', player.controle)), 1), 5)
+                            player.passe = min(max(int(request.POST.get(f'player_pass_{player_id}', player.passe)), 1), 5)
                             player.save()
                         except Exception as e:
                             messages.error(request, f'Erro ao atualizar jogador: {str(e)}')
