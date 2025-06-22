@@ -33,7 +33,6 @@ def participante_factory():
 
     return participante_service
 
-# Create your views here.
 @login_required
 def gerenciador(request):
     pelada_usecase = pelada_factory()
@@ -76,18 +75,14 @@ def salva_pelada(request, pelada_id):
         try:
             pelada = get_object_or_404(Pelada, id=pelada_id, criador=request.user)
             
-            # Obtém todos os jogadores existentes
             existing_players = {str(p.id): p for p in ParticipantePelada.objects.filter(pelada=pelada)}
             
-            # Processa os dados do formulário
             for key, value in request.POST.items():
                 if key.startswith('player_name_'):
                     player_id = key.split('_')[2]
                     
                     if player_id == 'new':
-                        # Cria um novo jogador
                         try:
-                            # Obtém todos os valores necessários
                             nome = value
                             selected = request.POST.get(f'player_selected_{player_id}') == 'on'
                             ataque = min(max(int(request.POST.get(f'player_attack_{player_id}', 3)), 1), 5)
@@ -96,7 +91,6 @@ def salva_pelada(request, pelada_id):
                             controle = min(max(int(request.POST.get(f'player_control_{player_id}', 3)), 1), 5)
                             passe = min(max(int(request.POST.get(f'player_pass_{player_id}', 3)), 1), 5)
                             
-                            # Cria o novo jogador
                             player = ParticipantePelada.objects.create(
                                 pelada=pelada,
                                 usuario=pelada.criador,
@@ -115,7 +109,6 @@ def salva_pelada(request, pelada_id):
                     elif player_id in existing_players:
                         player = existing_players[player_id]
                         try:
-                            # Atualiza todos os campos
                             player.nome = value
                             player.selected = request.POST.get(f'player_selected_{player_id}') == 'on'
                             player.ataque = min(max(int(request.POST.get(f'player_attack_{player_id}', player.ataque)), 1), 5)
@@ -128,7 +121,6 @@ def salva_pelada(request, pelada_id):
                             messages.error(request, f'Erro ao atualizar jogador: {str(e)}')
                             continue
             
-            # Processa jogadores removidos
             for key, value in request.POST.items():
                 if key.startswith('player_removed_'):
                     player_id = key.split('_')[2]
@@ -170,38 +162,29 @@ def sortear_times(request, pelada_id):
     pelada = get_object_or_404(Pelada, id=pelada_id, criador=request.user)
     participante_pelada_usecase = participante_factory()
     
-    # Obter todos os jogadores da pelada
     jogadores = participante_pelada_usecase.participante_pelada_repository.get_participantes_by_pelada_id(pelada_id)
     
-    # Obter IDs dos jogadores selecionados do POST
     jogadores_selecionados_ids = json.loads(request.POST.get('jogadores_selecionados[]', '[]'))
     
-    # Filtrar apenas os jogadores selecionados
     jogadores_selecionados = [j for j in jogadores if str(j.id) in jogadores_selecionados_ids]
     
-    # Verificar se há pelo menos 12 jogadores selecionados
     if len(jogadores_selecionados) < 12:
         messages.error(request, "É necessário ter pelo menos 12 jogadores selecionados para sortear os times.")
         return redirect('editar_pelada', pelada_id=pelada_id)
     
-    # Verificar se há mais de 18 jogadores selecionados
     if len(jogadores_selecionados) > 18:
         messages.error(request, "O número máximo de jogadores selecionados é 18 (6 jogadores por time).")
         return redirect('editar_pelada', pelada_id=pelada_id)
     
-    # Calcular médias dos jogadores
     for jogador in jogadores_selecionados:
         jogador.media = (jogador.ataque + jogador.defesa + jogador.velocidade + jogador.controle + jogador.passe) / 5
     
-    # Ordenar jogadores por média
     jogadores_ordenados = sorted(jogadores_selecionados, key=lambda x: x.media, reverse=True)
     
-    # Distribuir jogadores em times (máximo 6 por time)
     time1 = []
     time2 = []
     time3 = []
     
-    # Distribuir os melhores jogadores alternadamente
     for i in range(0, len(jogadores_ordenados), 3):
         if i < len(jogadores_ordenados) and len(time1) < 6:
             time1.append(jogadores_ordenados[i])
@@ -210,7 +193,6 @@ def sortear_times(request, pelada_id):
         if i + 2 < len(jogadores_ordenados) and len(time3) < 6:
             time3.append(jogadores_ordenados[i + 2])
     
-    # Calcular médias dos times
     media_time1 = sum(j.media for j in time1) / len(time1) if time1 else 0
     media_time2 = sum(j.media for j in time2) / len(time2) if time2 else 0
     media_time3 = sum(j.media for j in time3) / len(time3) if time3 else 0

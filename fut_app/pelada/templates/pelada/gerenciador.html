@@ -38,7 +38,6 @@
         font-size: 0.95rem;
     }
 
-    /* Estilo de planilha */
     .sheet-container {
         background: #1e1e1e;
         border-radius: 8px;
@@ -138,7 +137,6 @@
         display: inline;
     }
 
-    /* Mensagem quando não há peladas */
     .empty-message {
         text-align: center;
         padding: 40px 20px;
@@ -153,7 +151,6 @@
         opacity: 0.5;
     }
 
-    /* Botão flutuante */
     .floating-btn {
         position: fixed;
         bottom: 30px;
@@ -279,7 +276,6 @@
     {% endif %}
 
     <div class="sheet-container">
-        <!-- Cabeçalho da planilha -->
         <div class="sheet-header">
             <div class="sheet-cell">Nome</div>
             <div class="sheet-cell">Descrição</div>
@@ -287,7 +283,6 @@
             <div class="sheet-cell">Ações</div>
         </div>
 
-        <!-- Conteúdo da planilha -->
         {% if peladas %}
             {% for pelada in peladas %}
             <div class="sheet-row">
@@ -326,12 +321,11 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Função para remover as mensagens após a animação
         const alerts = document.querySelectorAll('.alert-auto-dismiss');
         alerts.forEach(alert => {
             setTimeout(() => {
                 alert.remove();
-            }, 3500); // 3.5 segundos (3s de exibição + 0.5s de animação)
+            }, 3500);
         });
     });
 </script>
