@@ -1,4 +1,5 @@
 from django.urls import path
+from . import views  # Importa o módulo views
 
 
 urlpatterns = [

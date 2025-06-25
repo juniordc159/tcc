@@ -627,7 +627,7 @@
             <i class="fas fa-arrow-left"></i>
             Voltar
         </a>
-        <form method="post" action="{% url 'sortear_times' pelada.id %}" style="display: inline; margin: 0;">
+        <form method="post" action="{% url 'sortear_times' pelada.id %}" style="display: inline; margin: 0;" id="sortear-form">
             {% csrf_token %}
             <input type="hidden" name="jogadores_selecionados[]" id="jogadores_selecionados">
             <button type="submit" class="action-btn" style="background: #2d2d2d; color: #00cc66; margin: 0; padding: 0.4rem 1rem;" onclick="return prepararSorteio()">
@@ -635,6 +635,13 @@
                 Sortear Times
             </button>
         </form>
+        <!-- Popup de loading -->
+        <div id="loading-popup" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(18,18,18,0.85); z-index:2000; align-items:center; justify-content:center;">
+            <div style="background:#222; color:#00cc66; padding:2rem 3rem; border-radius:12px; box-shadow:0 4px 24px #000a; font-size:1.5rem; display:flex; flex-direction:column; align-items:center;">
+                <i class="fas fa-spinner fa-spin fa-2x" style="margin-bottom:1rem;"></i>
+                Sorteando times, aguarde...
+            </div>
+        </div>
         <button type="submit" form="players-form" class="action-btn primary">
             <i class="fas fa-save"></i>
             Salvar Alterações
@@ -852,6 +859,8 @@
         }
         
         document.getElementById('jogadores_selecionados').value = JSON.stringify(jogadoresSelecionados);
+        // Mostra o popup de loading
+        document.getElementById('loading-popup').style.display = 'flex';
         return true;
     }
 
