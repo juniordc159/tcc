@@ -1,5 +1,6 @@
 Django==5.2
 psycopg-binary
+psycopg2-binary
 matplotlib
 pandas
 pulp
