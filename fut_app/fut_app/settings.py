@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'fut_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        dj_database_url.config(default='postgresql://admin:zAsezAJ3azYF5E12cqh30xqYExM1ihim@dpg-d1i2i8ili9vc73d7g6vg-a/fut_app_db')
+        dj_database_url.config(default='postgresql://admin:zAsezAJ3azYF5E12cqh30xqYExM1ihim@dpg-d1i2i8ili9vc73d7g6vg-a.oregon-postgres.render.com/fut_app_db')
     }
 }
 
