@@ -3,3 +3,4 @@ psycopg-binary
 matplotlib
 pandas
 pulp
+gunicorn
