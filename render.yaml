@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: fut_app
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn fut_app.wsgi"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: fut_app.settings
+      - key: PYTHON_VERSION
+        value: 3.10
