@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-^!7ar37$(=#4%)3uegzor*z$n+j9way8mxo-1ugk$5(x&z2#wa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 # Configurar login
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'pagina_principal'
@@ -81,8 +81,7 @@ WSGI_APPLICATION = 'fut_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        dj_database_url.config(default='postgresql://admin:zAsezAJ3azYF5E12cqh30xqYExM1ihim@dpg-d1i2i8ili9vc73d7g6vg-a/fut_app_db')
     }
 }
 
